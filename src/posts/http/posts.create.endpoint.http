@@ -1,0 +1,7 @@
+POST http://localhost:3000/posts/
+Content-Type:application/json
+{
+    "title":"this is test post title",
+    "content":"this is content of the post",
+    "coverImageUrl":"http://someurl.org/image.png"
+}
