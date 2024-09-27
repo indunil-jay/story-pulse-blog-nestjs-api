@@ -48,6 +48,7 @@ export class PostsController {
     description: 'Post not found (for single post requests).',
   })
   @Get('/:id?')
+  /** TODO: */
   public getPosts(
     @Param() getPostParamDTO: GetPostParamDTO,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
@@ -82,6 +83,7 @@ export class PostsController {
       'Internal Server Error. An unexpected error occurred on the server while processing the request.',
   })
   @Post()
+  /** TODO: */
   public createPosts(@Body() createPostDTO: CreatePostDTO) {
     console.log(createPostDTO);
     return 'This is the create posts endpoint (Not implemented yet).';
