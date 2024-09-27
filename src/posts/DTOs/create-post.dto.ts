@@ -9,9 +9,12 @@ import {
   Matches,
   MaxLength,
   MinLength,
+  ValidateNested,
 } from 'class-validator';
 import { PostStatus } from '../enums/postStatus.enum';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { CreateMetaDataDTO } from 'src/meta-data/DTOs/create-meta-data.dto';
+import { Type } from 'class-transformer';
 
 export class CreatePostDTO {
   @ApiProperty({
@@ -115,4 +118,23 @@ export class CreatePostDTO {
     message: 'Each category must be at least 3 characters long.',
   })
   categories?: string[];
+
+  @ApiPropertyOptional({
+    required: false,
+    description: 'A list of meta data values that a post has.',
+    items: {
+      type: 'object',
+      properties: {
+        metaValue: {
+          type: 'json',
+          description: 'the metaValue is a JSON string',
+          example: '{"backLinks1":"https://backlink.org/link-1"}',
+        },
+      },
+    },
+  })
+  @IsOptional()
+  @Type(() => CreateMetaDataDTO)
+  @ValidateNested({ each: true })
+  metaDataOption?: CreateMetaDataDTO | null;
 }

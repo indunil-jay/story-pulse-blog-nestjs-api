@@ -6,8 +6,8 @@ import { MetaDataService } from './meta-data.service';
 export class MetaDataController {
   constructor(private readonly metaDataService: MetaDataService) {}
 
-  @Post()
-  public createPostMetaData(@Body() createMetaDataDTO: CreateMetaDataDTO) {
-    return this.metaDataService.createMetaData(createMetaDataDTO);
-  }
+  // @Post()
+  // public createPostMetaData(@Body() createMetaDataDTO: CreateMetaDataDTO) {
+  //   return this.metaDataService.createMetaData(createMetaDataDTO);
+  // }
 }

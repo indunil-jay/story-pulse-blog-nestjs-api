@@ -62,9 +62,9 @@ export class Post {
     type: 'timestamp',
     nullable: true,
   })
-  publishOn?: Date;
+  publishedOn?: Date;
 
-  @OneToOne(() => MetaData)
+  @OneToOne(() => MetaData, { cascade: true, eager: true })
   @JoinColumn()
   metaDataOption: MetaData;
 
