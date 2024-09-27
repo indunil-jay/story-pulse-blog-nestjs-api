@@ -36,6 +36,7 @@ export class CreatePostDTO {
     message:
       'Slug must be lowercase and can only contain letters, numbers, and hyphens. No leading or trailing hyphen.',
   })
+  @MaxLength(192)
   slug: string;
 
   @ApiProperty({
@@ -55,8 +56,8 @@ export class CreatePostDTO {
     example: 'This is a sample blog post content.',
   })
   @IsString()
-  @IsOptional()
-  content?: string;
+  @IsNotEmpty()
+  content: string;
 
   @ApiPropertyOptional({
     description: 'The URL of the featured image for the blog post.',
@@ -64,6 +65,7 @@ export class CreatePostDTO {
   })
   @IsUrl({}, { message: 'coverImageUrl must be a valid URL.' })
   @IsOptional()
+  @MaxLength(1024)
   coverImageUrl?: string;
 
   @ApiPropertyOptional({

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, Post } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PostsModule } from './posts/posts.module';
@@ -13,7 +13,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       useFactory: () => ({
         type: 'postgres',
         synchronize: true, //TODO: use only dev
-        entities: [],
+        entities: [Post],
         port: 5432,
         username: 'postgres',
         password: 'root1122',

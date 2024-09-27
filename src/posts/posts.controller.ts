@@ -85,7 +85,6 @@ export class PostsController {
   @Post()
   /** TODO: */
   public createPosts(@Body() createPostDTO: CreatePostDTO) {
-    console.log(createPostDTO);
-    return 'This is the create posts endpoint (Not implemented yet).';
+    return this.postsService.createPost(createPostDTO);
   }
 }
