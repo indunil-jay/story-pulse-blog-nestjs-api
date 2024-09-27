@@ -2,10 +2,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { PostStatus } from './enums/postStatus.enum';
+import { CreatePostDTO } from './DTOs/create-post.dto';
+import { MetaData } from 'src/meta-data/meta-data.entity';
 
 @Entity()
 export class Post {
@@ -54,17 +58,15 @@ export class Post {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  // @Column({
-  //   type: 'timestamp',
-  //   nullable: true,
-  // })
-  // createdAt?: Date;
+  @Column({
+    type: 'timestamp',
+    nullable: true,
+  })
+  publishOn?: Date;
 
-  // @Column({
-  //   type: 'timestamp',
-  //   nullable: true,
-  // })
-  // updatedAt?: Date;
+  @OneToOne(() => MetaData)
+  @JoinColumn()
+  metaDataOption: MetaData;
 
   //   @Column()
   //   tags?: string[];

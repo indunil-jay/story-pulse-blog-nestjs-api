@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { PostsModule } from './posts/posts.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TagsModule } from './tags/tags.module';
+import { MetaDataModule } from './meta-data/meta-data.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { TagsModule } from './tags/tags.module';
       }),
     }),
     TagsModule,
+    MetaDataModule,
   ],
   controllers: [AppController],
   providers: [AppService],
