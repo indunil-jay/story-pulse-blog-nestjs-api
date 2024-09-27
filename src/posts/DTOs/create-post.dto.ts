@@ -51,7 +51,7 @@ export class CreatePostDTO {
   @IsNotEmpty()
   status: PostStatus;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     description: 'The main content body of the blog post.',
     example: 'This is a sample blog post content.',
   })
@@ -65,26 +65,28 @@ export class CreatePostDTO {
   })
   @IsUrl({}, { message: 'coverImageUrl must be a valid URL.' })
   @IsOptional()
-  @MaxLength(1024)
+  @MaxLength(1024, {
+    message: 'The URL of the featured image must not exceed 192 characters.',
+  })
   coverImageUrl?: string;
 
-  @ApiPropertyOptional({
-    description:
-      'The date and time when the blog post was created, in ISO 8601 format.',
-    example: '2024-09-27T07:46:32+0000',
-  })
-  @IsISO8601({}, { message: 'createdAt must be a valid ISO 8601 date string.' })
-  @IsOptional()
-  createdAt?: Date;
+  // @ApiPropertyOptional({
+  //   description:
+  //     'The date and time when the blog post was created, in ISO 8601 format.',
+  //   example: '2024-09-27T07:46:32+0000',
+  // })
+  // @IsISO8601({}, { message: 'createdAt must be a valid ISO 8601 date string.' })
+  // @IsOptional()
+  // createdAt?: Date;
 
-  @ApiPropertyOptional({
-    description:
-      'The date and time when the blog post was last updated, in ISO 8601 format.',
-    example: '2024-09-29T07:46:32+0000',
-  })
-  @IsISO8601({}, { message: 'updatedAt must be a valid ISO 8601 date string.' })
-  @IsOptional()
-  updatedAt?: Date;
+  // @ApiPropertyOptional({
+  //   description:
+  //     'The date and time when the blog post was last updated, in ISO 8601 format.',
+  //   example: '2024-09-29T07:46:32+0000',
+  // })
+  // @IsISO8601({}, { message: 'updatedAt must be a valid ISO 8601 date string.' })
+  // @IsOptional()
+  // updatedAt?: Date;
 
   @ApiPropertyOptional({
     description:

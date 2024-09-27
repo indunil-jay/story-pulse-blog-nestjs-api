@@ -1,4 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { PostStatus } from './enums/postStatus.enum';
 
 @Entity()
@@ -42,17 +48,23 @@ export class Post {
   })
   coverImageUrl?: string;
 
-  @Column({
-    type: 'timestamp',
-    nullable: true,
-  })
-  createdAt?: Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
-  @Column({
-    type: 'timestamp',
-    nullable: true,
-  })
-  updatedAt?: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  // @Column({
+  //   type: 'timestamp',
+  //   nullable: true,
+  // })
+  // createdAt?: Date;
+
+  // @Column({
+  //   type: 'timestamp',
+  //   nullable: true,
+  // })
+  // updatedAt?: Date;
 
   //   @Column()
   //   tags?: string[];
