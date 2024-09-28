@@ -5,6 +5,7 @@ import { PostsModule } from './posts/posts.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TagsModule } from './tags/tags.module';
 import { MetaDataModule } from './meta-data/meta-data.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { MetaDataModule } from './meta-data/meta-data.module';
     }),
     TagsModule,
     MetaDataModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

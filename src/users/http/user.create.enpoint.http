@@ -1,0 +1,13 @@
+POST http://localhost:3000/users/
+Content-Type:application/json
+{
+    "firstName":"mike",
+    "lastName":"doe",
+    "email":"mike@gmail.com",
+    "password":"Test123@",
+     "confirmPassword":"Test123@",
+    "dataOfBirth":"1999-09-09",
+    "bio":"Passionate software developer with experience in web development.",
+    "profileImage":"https://example.com/profile-image.jpg"
+
+}
