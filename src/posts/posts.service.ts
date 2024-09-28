@@ -1,3 +1,4 @@
+import { PatchPostDTO } from './DTOs/patch-post.dto';
 import { CreatePostDTO } from './DTOs/create-post.dto';
 import { Repository } from 'typeorm';
 import { GetPostParamDTO } from './DTOs/get-post-param.dto';
@@ -66,5 +67,29 @@ export class PostsService {
    */
   public async deletePost(id: number) {
     return await this.postsRepository.delete({ id });
+  }
+
+  /** TODO:
+   * update a blog post
+   */
+
+  public async updatePost(patchPostDTO: PatchPostDTO) {
+    //Find the post
+    const post = await this.postsRepository.findOneBy({ id: patchPostDTO.id });
+
+    //Update post
+    post.title = patchPostDTO.title ?? post.title;
+    post.content = patchPostDTO.content ?? post.content;
+    post.status = patchPostDTO.status ?? post.status;
+    post.slug = patchPostDTO.slug ?? post.slug;
+    post.publishedOn = patchPostDTO.publishedOn ?? post.publishedOn;
+    post.coverImageUrl = patchPostDTO.coverImageUrl ?? post.coverImageUrl;
+
+    if (patchPostDTO.tags) {
+      const tags = await this.tagsService.findTags(patchPostDTO.tags);
+      post.tags = tags;
+    }
+
+    return await this.postsRepository.save(post);
   }
 }

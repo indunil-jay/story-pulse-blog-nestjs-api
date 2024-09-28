@@ -74,6 +74,13 @@ export class CreatePostDTO {
   })
   coverImageUrl?: string;
 
+  @ApiProperty({
+    description: 'ISO format string for post published time',
+  })
+  @IsOptional()
+  @IsISO8601()
+  publishedOn?: Date;
+
   @ApiPropertyOptional({
     description: 'A list of tags IDs associated with the blog post.',
     example: [1, 2],

@@ -7,12 +7,14 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   Query,
 } from '@nestjs/common';
 import { CreatePostDTO } from './DTOs/create-post.dto';
 import { GetPostParamDTO } from './DTOs/get-post-param.dto';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { PatchPostDTO } from './DTOs/patch-post.dto';
 
 @ApiTags('Posts')
 @Controller('posts')
@@ -93,5 +95,10 @@ export class PostsController {
   /** TODO: */
   public deletePosts(@Param('id', ParseIntPipe) id: number) {
     return this.postsService.deletePost(id);
+  }
+
+  @Patch()
+  public updatePost(@Body() patchPostDTO: PatchPostDTO) {
+    return this.postsService.updatePost(patchPostDTO);
   }
 }
