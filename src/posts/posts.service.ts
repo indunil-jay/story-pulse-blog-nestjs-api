@@ -30,12 +30,19 @@ export class PostsService {
   ) {
     return await this.postsRepository.find();
   }
+
   /** TODO:
    * creates a new blog post
-
    */
   public async createPost(createPostDTO: CreatePostDTO) {
     const post = this.postsRepository.create(createPostDTO);
     return await this.postsRepository.save(post);
+  }
+
+  /** TODO:
+   * delete a blog post by id
+   */
+  public async deletePost(id: number) {
+    return await this.postsRepository.delete({ id });
   }
 }

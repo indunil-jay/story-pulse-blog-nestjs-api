@@ -3,6 +3,7 @@ import {
   Body,
   Controller,
   DefaultValuePipe,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -86,5 +87,11 @@ export class PostsController {
   /** TODO: */
   public createPosts(@Body() createPostDTO: CreatePostDTO) {
     return this.postsService.createPost(createPostDTO);
+  }
+
+  @Delete('/:id')
+  /** TODO: */
+  public deletePosts(@Param('id', ParseIntPipe) id: number) {
+    return this.postsService.deletePost(id);
   }
 }
