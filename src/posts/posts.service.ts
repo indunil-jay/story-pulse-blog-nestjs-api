@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { Post } from './post.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsersService } from 'src/users/users.service';
+import { TagsService } from 'src/tags/tags.service';
 
 /**
  * Service to connect to the users table and perform business operations related to posts.
@@ -16,6 +17,8 @@ export class PostsService {
     private readonly postsRepository: Repository<Post>,
 
     private readonly usersService: UsersService,
+
+    private readonly tagsService: TagsService,
   ) {}
 
   /** TODO:
@@ -47,9 +50,13 @@ export class PostsService {
       createPostDTO.authorId,
     );
 
+    //find tags
+    const tags = await this.tagsService.findTags(createPostDTO.tags);
+
     const post = this.postsRepository.create({
       ...createPostDTO,
       author: currentAuthor,
+      tags,
     });
     return await this.postsRepository.save(post);
   }

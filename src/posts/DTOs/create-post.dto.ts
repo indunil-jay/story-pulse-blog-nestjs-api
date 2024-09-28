@@ -74,37 +74,14 @@ export class CreatePostDTO {
   })
   coverImageUrl?: string;
 
-  // @ApiPropertyOptional({
-  //   description:
-  //     'The date and time when the blog post was created, in ISO 8601 format.',
-  //   example: '2024-09-27T07:46:32+0000',
-  // })
-  // @IsISO8601({}, { message: 'createdAt must be a valid ISO 8601 date string.' })
-  // @IsOptional()
-  // createdAt?: Date;
-
-  // @ApiPropertyOptional({
-  //   description:
-  //     'The date and time when the blog post was last updated, in ISO 8601 format.',
-  //   example: '2024-09-29T07:46:32+0000',
-  // })
-  // @IsISO8601({}, { message: 'updatedAt must be a valid ISO 8601 date string.' })
-  // @IsOptional()
-  // updatedAt?: Date;
-
   @ApiPropertyOptional({
-    description:
-      'A list of tags associated with the blog post. Each tag must be at least 3 characters long.',
-    example: ['science', 'coding'],
+    description: 'A list of tags IDs associated with the blog post.',
+    example: [1, 2],
   })
   @IsOptional()
   @IsArray({ message: 'tags must be an array of strings.' })
-  @IsString({ each: true, message: 'Each tag must be a string.' })
-  @MinLength(3, {
-    each: true,
-    message: 'Each tag must be at least 3 characters long.',
-  })
-  tags?: string[];
+  @IsInt({ each: true, message: 'Each tag must be a integer.' })
+  tags?: number[];
 
   @ApiPropertyOptional({
     description:

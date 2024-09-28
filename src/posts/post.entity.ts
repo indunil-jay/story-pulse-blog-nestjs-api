@@ -3,6 +3,8 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -12,6 +14,7 @@ import { PostStatus } from './enums/postStatus.enum';
 import { CreatePostDTO } from './DTOs/create-post.dto';
 import { MetaData } from 'src/meta-data/meta-data.entity';
 import { User } from 'src/users/user.entity';
+import { Tag } from 'src/tags/tag.entity';
 
 @Entity()
 export class Post {
@@ -75,8 +78,9 @@ export class Post {
   @ManyToOne(() => User, (user) => user.posts, { eager: true })
   author: User;
 
-  //   @Column()
-  //   tags?: string[];
+  @ManyToMany(() => Tag, { eager: true })
+  @JoinTable()
+  tags?: Tag[];
 
   //   @Column()
   //   categories?: string[];
