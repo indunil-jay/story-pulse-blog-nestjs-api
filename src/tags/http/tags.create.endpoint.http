@@ -2,8 +2,8 @@ POST http://localhost:3000/tags/
 Content-Type:application/json
 
 {
-"name":"typeScript",
-"slug":"typescript",
-"description":"typescript related things",
+"name":"javaScript",
+"slug":"javascript",
+"description":"javascript related things",
 "featuredImageUrl":"http://example.com/sample-image-tag.jpg"
 }

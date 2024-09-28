@@ -1,15 +1,15 @@
 POST http://localhost:3000/posts/
 Content-Type:application/json
 {
-    "title":"this is test post title5",
-    "content":"this is content of the post5",
+    "title":"this is test post title6",
+    "content":"this is content of the post6",
     "coverImageUrl":"http://someurl.org/image.png",
-    "slug":"this-is-content-of-the-post-5",
+    "slug":"this-is-content-of-the-post-6",
     "status":"published",
     "authorId":1,
-    "tags":[1],
+    "tags":[1,2],
     "metaDataOption":{
-   "metaValue":"{\"backLinks2\":\"https://backlink.org/link-2\"}"
+   "metaValue":"{\"backLinks6\":\"https://backlink.org/link-6\"}"
 
 
     }
