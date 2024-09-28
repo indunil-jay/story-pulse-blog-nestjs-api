@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserRole } from './enums/users.roles.enum';
+import { Post } from 'src/posts/post.entity';
 
 @Entity()
 export class User {
@@ -50,4 +51,7 @@ export class User {
 
   @Column({ type: 'varchar', length: 1024, nullable: true })
   profileImage?: string;
+
+  @OneToMany(() => Post, (post) => post.author)
+  posts: Post[];
 }

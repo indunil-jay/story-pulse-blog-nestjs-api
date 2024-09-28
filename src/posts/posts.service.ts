@@ -4,6 +4,7 @@ import { GetPostParamDTO } from './DTOs/get-post-param.dto';
 import { Injectable } from '@nestjs/common';
 import { Post } from './post.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UsersService } from 'src/users/users.service';
 
 /**
  * Service to connect to the users table and perform business operations related to posts.
@@ -13,6 +14,8 @@ export class PostsService {
   constructor(
     @InjectRepository(Post)
     private readonly postsRepository: Repository<Post>,
+
+    private readonly usersService: UsersService,
   ) {}
 
   /** TODO:
@@ -35,7 +38,14 @@ export class PostsService {
    * creates a new blog post
    */
   public async createPost(createPostDTO: CreatePostDTO) {
-    const post = this.postsRepository.create(createPostDTO);
+    const currentAuthor = await this.usersService.findOneById(
+      createPostDTO.authorId,
+    );
+
+    const post = this.postsRepository.create({
+      ...createPostDTO,
+      author: currentAuthor,
+    });
     return await this.postsRepository.save(post);
   }
 

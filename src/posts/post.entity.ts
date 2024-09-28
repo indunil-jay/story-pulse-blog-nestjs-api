@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -10,6 +11,7 @@ import {
 import { PostStatus } from './enums/postStatus.enum';
 import { CreatePostDTO } from './DTOs/create-post.dto';
 import { MetaData } from 'src/meta-data/meta-data.entity';
+import { User } from 'src/users/user.entity';
 
 @Entity()
 export class Post {
@@ -69,6 +71,9 @@ export class Post {
     eager: true,
   })
   metaDataOption: MetaData;
+
+  @ManyToOne(() => User, (user) => user.posts)
+  author: User;
 
   //   @Column()
   //   tags?: string[];
