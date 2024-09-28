@@ -31,7 +31,12 @@ export class PostsService {
     limit: number,
     page: number,
   ) {
-    return await this.postsRepository.find();
+    return await this.postsRepository.find({
+      relations: {
+        author: true,
+        metaDataOption: true,
+      },
+    });
   }
 
   /** TODO:

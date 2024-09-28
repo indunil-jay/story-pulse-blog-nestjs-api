@@ -9,7 +9,7 @@ import {
   MinLength,
 } from 'class-validator';
 
-export class createTagDTO {
+export class CreateTagDTO {
   @ApiProperty({
     description:
       'The name of the tag. It should be between 3 and 96 characters long.',
