@@ -2,11 +2,16 @@ import { PatchPostDTO } from './DTOs/patch-post.dto';
 import { CreatePostDTO } from './DTOs/create-post.dto';
 import { Repository } from 'typeorm';
 import { GetPostParamDTO } from './DTOs/get-post-param.dto';
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  RequestTimeoutException,
+} from '@nestjs/common';
 import { Post } from './post.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsersService } from 'src/users/users.service';
 import { TagsService } from 'src/tags/tags.service';
+import { Tag } from 'src/tags/tag.entity';
 
 /**
  * Service to connect to the users table and perform business operations related to posts.
@@ -74,8 +79,20 @@ export class PostsService {
    */
 
   public async updatePost(patchPostDTO: PatchPostDTO) {
+    let post: Post | undefined = undefined;
     //Find the post
-    const post = await this.postsRepository.findOneBy({ id: patchPostDTO.id });
+    try {
+      post = await this.postsRepository.findOneBy({ id: patchPostDTO.id });
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment please try later.',
+        { description: 'error connecting to the database.' },
+      );
+    }
+
+    if (!post) {
+      throw new BadRequestException('There is a no post with that ID.');
+    }
 
     //Update post
     post.title = patchPostDTO.title ?? post.title;
@@ -85,11 +102,34 @@ export class PostsService {
     post.publishedOn = patchPostDTO.publishedOn ?? post.publishedOn;
     post.coverImageUrl = patchPostDTO.coverImageUrl ?? post.coverImageUrl;
 
-    if (patchPostDTO.tags) {
-      const tags = await this.tagsService.findTags(patchPostDTO.tags);
-      post.tags = tags;
+    let tags: Tag[] | [] = [];
+    try {
+      if (patchPostDTO.tags) {
+        tags = await this.tagsService.findTags(patchPostDTO.tags);
+        post.tags = tags;
+      }
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment please try later.',
+        { description: 'error connecting to the database.' },
+      );
     }
 
-    return await this.postsRepository.save(post);
+    if (!tags || tags.length !== patchPostDTO.tags.length) {
+      throw new BadRequestException(
+        'Please check yoyr tags IDs and ensure they are correct.',
+      );
+    }
+
+    try {
+      post = await this.postsRepository.save(post);
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment please try later.',
+        { description: 'error connecting to the database.' },
+      );
+    }
+
+    return post;
   }
 }
