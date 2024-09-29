@@ -12,6 +12,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UsersService } from 'src/users/users.service';
 import { TagsService } from 'src/tags/tags.service';
 import { Tag } from 'src/tags/tag.entity';
+import { GetPostDTO } from './DTOs/get.posts.dto';
+import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
+import { IPaginated } from 'src/common/pagination/interfaces/paginated.interface';
 
 /**
  * Service to connect to the users table and perform business operations related to posts.
@@ -25,27 +28,22 @@ export class PostsService {
     private readonly usersService: UsersService,
 
     private readonly tagsService: TagsService,
+
+    private readonly paginationProvider: PaginationProvider,
   ) {}
 
   /** TODO:
    * Fetches a list of posts based on the provided parameters.
    *
-   * @param {GetPostParamDTO} getPostParamDTO - Data transfer object for post parameters.
-   * @param {number} limit - The number of posts to retrieve per page.
-   * @param {number} page - The page number for paginated results.
-   *
    */
   public async findPosts(
     getPostParamDTO: GetPostParamDTO,
-    limit: number,
-    page: number,
-  ) {
-    return await this.postsRepository.find({
-      relations: {
-        author: true,
-        metaDataOption: true,
-      },
-    });
+    postQuery: GetPostDTO,
+  ): Promise<IPaginated<Post>> {
+    return await this.paginationProvider.paginateQuery(
+      { limit: postQuery.limit, page: postQuery.page },
+      this.postsRepository,
+    );
   }
 
   /** TODO:

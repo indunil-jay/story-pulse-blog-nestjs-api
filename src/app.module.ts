@@ -7,6 +7,7 @@ import { TagsModule } from './tags/tags.module';
 import { MetaDataModule } from './meta-data/meta-data.module';
 import { UsersModule } from './users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { PaginationModule } from './common/pagination/pagination.module';
 
 import databaseConfig from './config/database.config';
 import appConfig from './config/app.config';
@@ -44,6 +45,7 @@ console.log(ENV);
     TagsModule,
     MetaDataModule,
     UsersModule,
+    PaginationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

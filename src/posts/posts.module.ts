@@ -5,8 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Post } from './post.entity';
 import { MetaData } from 'src/meta-data/meta-data.entity';
 import { UsersModule } from 'src/users/users.module';
-import { Tag } from 'src/tags/tag.entity';
 import { TagsModule } from 'src/tags/tags.module';
+import { PaginationModule } from 'src/common/pagination/pagination.module';
 
 @Module({
   controllers: [PostsController],
@@ -15,6 +15,7 @@ import { TagsModule } from 'src/tags/tags.module';
     TypeOrmModule.forFeature([Post, MetaData]),
     UsersModule,
     TagsModule,
+    PaginationModule,
   ],
 })
 export class PostsModule {}

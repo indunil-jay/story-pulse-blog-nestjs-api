@@ -15,6 +15,7 @@ import { CreatePostDTO } from './DTOs/create-post.dto';
 import { GetPostParamDTO } from './DTOs/get-post-param.dto';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PatchPostDTO } from './DTOs/patch-post.dto';
+import { GetPostDTO } from './DTOs/get.posts.dto';
 
 @ApiTags('Posts')
 @Controller('posts')
@@ -54,10 +55,10 @@ export class PostsController {
   /** TODO: */
   public getPosts(
     @Param() getPostParamDTO: GetPostParamDTO,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query() postQuery: GetPostDTO,
   ) {
-    return this.postsService.findPosts(getPostParamDTO, limit, page);
+    console.log(postQuery);
+    return this.postsService.findPosts(getPostParamDTO, postQuery);
   }
 
   @ApiOperation({
