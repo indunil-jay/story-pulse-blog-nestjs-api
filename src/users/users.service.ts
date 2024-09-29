@@ -3,16 +3,20 @@ import {
   Injectable,
   RequestTimeoutException,
 } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDTO } from './DTOs/create-user.dto';
+import { UsersCreateManyProvider } from './providers/users.create-many.provider';
+import { CreateManyUsersDTO } from './DTOs/create-many-user.dto';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
+
+    private readonly usersCreateManyProvider: UsersCreateManyProvider,
   ) {}
 
   /**TODO: */
@@ -66,5 +70,10 @@ export class UsersService {
       throw new BadRequestException('The user Id does not exists.');
     }
     return user;
+  }
+
+  // create many users
+  public async createManyUsers(createManyUsersDTO: CreateManyUsersDTO) {
+    return this.usersCreateManyProvider.createManyUsers(createManyUsersDTO);
   }
 }

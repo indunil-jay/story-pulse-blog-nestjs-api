@@ -11,3 +11,36 @@ Content-Type:application/json
     "profileImage":"https://example.com/profile-image.jpg"
 
 }
+
+
+
+
+POST http://localhost:3000/users/create-many
+Content-Type:application/json
+
+{
+    "users":[
+    {
+    "firstName":"mike2",
+    "lastName":"doe",
+    "email":"mike1@gmail.com",
+    "password":"Test123@",
+     "confirmPassword":"Test123@",
+    "dataOfBirth":"1999-09-09",
+    "bio":"Passionate software developer with experience in web development.",
+    "profileImage":"https://example.com/profile-image.jpg"
+
+},
+{
+    "firstName":"mike1",
+    "lastName":"doe",
+    "email":"mike2@gmail.com",
+    "password":"Test123@",
+     "confirmPassword":"Test123@",
+    "dataOfBirth":"1999-09-09",
+    "bio":"Passionate software developer with experience in web development.",
+    "profileImage":"https://example.com/profile-image.jpg"
+
+}
+]
+}
