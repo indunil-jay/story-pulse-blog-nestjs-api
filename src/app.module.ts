@@ -8,6 +8,7 @@ import { MetaDataModule } from './meta-data/meta-data.module';
 import { UsersModule } from './users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PaginationModule } from './common/pagination/pagination.module';
+import { AuthModule } from './auth/auth.module';
 
 import databaseConfig from './config/database.config';
 import appConfig from './config/app.config';
@@ -46,6 +47,7 @@ console.log(ENV);
     MetaDataModule,
     UsersModule,
     PaginationModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

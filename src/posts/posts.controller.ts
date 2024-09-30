@@ -57,7 +57,7 @@ export class PostsController {
     @Param() getPostParamDTO: GetPostParamDTO,
     @Query() postQuery: GetPostDTO,
   ) {
-    console.log(postQuery);
+    
     return this.postsService.findPosts(getPostParamDTO, postQuery);
   }
 

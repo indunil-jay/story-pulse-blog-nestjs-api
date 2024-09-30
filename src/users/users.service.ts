@@ -1,15 +1,19 @@
+import { SignupProvider } from './providers/signup.provider';
+import { SignUpDTO } from './../auth/DTOs/auth.sign-up.dto';
 import {
   BadRequestException,
   Injectable,
   RequestTimeoutException,
 } from '@nestjs/common';
-import { DataSource, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserDTO } from './DTOs/create-user.dto';
 import { UsersCreateManyProvider } from './providers/users.create-many.provider';
 import { CreateManyUsersDTO } from './DTOs/create-many-user.dto';
 
+/**
+ *
+ */
 @Injectable()
 export class UsersService {
   constructor(
@@ -17,43 +21,21 @@ export class UsersService {
     private readonly usersRepository: Repository<User>,
 
     private readonly usersCreateManyProvider: UsersCreateManyProvider,
+
+    private readonly signupProvider: SignupProvider,
   ) {}
 
-  /**TODO: */
-  public async createUser(createUserDTO: CreateUserDTO) {
-    let existingUser: User | undefined = undefined;
+  /**
+   * Registers a new user by delegating to the SignupProvider.
+   *
+   * @param {SignUpDTO} signUpDTO - The data transfer object containing user registration details.
+   * @returns {Promise<any>} The result of the user registration process.
+   *
+   */
 
-    try {
-      existingUser = await this.usersRepository.findOne({
-        where: { email: createUserDTO.email },
-      });
-    } catch (error) {
-      throw new RequestTimeoutException(
-        'Unable to process your request at the moment please try later.',
-        { description: 'error connecting to the database.' },
-      );
-    }
-
-    if (existingUser) {
-      throw new BadRequestException(
-        'The email already exists, please check your email.',
-      );
-    }
-
-    let user = this.usersRepository.create(createUserDTO);
-
-    try {
-      user = await this.usersRepository.save(user);
-    } catch (error) {
-      throw new RequestTimeoutException(
-        'Unable to process your request at the moment please try later.',
-        { description: 'error connecting to the database.' },
-      );
-    }
-    return user;
+  public signup(signUpDTO: SignUpDTO): Promise<User> {
+    return this.signupProvider.signup(signUpDTO);
   }
-
-  /**TODO: */
 
   public async findOneById(id: number) {
     let user: User | undefined = undefined;

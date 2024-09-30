@@ -9,10 +9,11 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { Match } from '../decorators/password-match.decorator';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
-export class CreateUserDTO {
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Match } from '../decorators/password-match.decorator';
+
+export class SignUpDTO {
   @ApiProperty({
     description: 'A user’s first name.',
     example: 'mike',
@@ -76,7 +77,7 @@ export class CreateUserDTO {
   })
   @IsString()
   @IsNotEmpty()
-  @Match(CreateUserDTO, (v) => v.password, {
+  @Match(SignUpDTO, (v) => v.password, {
     message: 'Passwords do not match.',
   })
   confirmPassword: string;

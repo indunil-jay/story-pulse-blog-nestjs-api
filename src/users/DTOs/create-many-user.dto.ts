@@ -1,7 +1,8 @@
 import { IsArray, IsNotEmpty, ValidateNested } from 'class-validator';
-import { CreateUserDTO } from './create-user.dto';
+// import { CreateUserDTO } from './create-user.dto';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
+import { SignUpDTO } from 'src/auth/DTOs/auth.sign-up.dto';
 
 export class CreateManyUsersDTO {
   @ApiProperty({
@@ -16,6 +17,6 @@ export class CreateManyUsersDTO {
   @ValidateNested({
     each: true,
   })
-  @Type(() => CreateUserDTO)
-  users: CreateUserDTO[];
+  @Type(() => SignUpDTO)
+  users: SignUpDTO[];
 }
