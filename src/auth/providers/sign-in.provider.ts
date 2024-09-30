@@ -13,12 +13,12 @@ import { ConfigType } from '@nestjs/config';
 import jwtConfig from '../config/jwt.config';
 
 /**
- * @class SigninProvider user to handle the  user sign in business-logic.
+ *  SigninProvider user to handle the  user sign in business-logic.
  */
 @Injectable()
 export class SignInProvider {
   /**
-   * @constructor  Creates an instace of SignInProvider.
+   * Creates an instace of SignInProvider.
    *
    * @param {UsersService} usersService - Service to manage user operations.
    * @param {HashingProvider} hashingProvider - Provider for password hashing and comparison.
@@ -38,14 +38,13 @@ export class SignInProvider {
   ) {}
 
   /**
-   * Sign in a user .
+   * Sign in a user
    *
    * @param {SignInDTO} signInDTO - Data transfer object containing sign-in credentials.
    * @returns {Promise<any>} - A promise that resolves to an object containing the access token.
    * @throws {RequestTimeoutException} - Throws if there is an issue comparing passwords.
    * @throws {UnauthorizedException} - Throws if the password is incorrect.
    */
-
   public async signin(signInDTO: SignInDTO): Promise<any> {
     // Retrieve user by email from the user service
     let user = await this.usersService.findOneByEmail(signInDTO.email);

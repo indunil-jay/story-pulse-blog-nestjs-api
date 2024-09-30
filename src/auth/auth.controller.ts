@@ -6,14 +6,14 @@ import { User } from 'src/users/user.entity';
 import { SignInDTO } from './DTOs/auth.sign-in.dto';
 
 /**
- * @class AuthController responsible for handling authentication-related api routes.
+ *  AuthController responsible for handling authentication-related api routes.
  */
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   /**
-   * @constructor Creates an instance of AuthController.
+   *  Creates an instance of AuthController.
    *
    * @param {AuthService} authService - The service responsible for authentication operations.
    */

@@ -6,12 +6,12 @@ import { User } from 'src/users/user.entity';
 
 import { UsersService } from 'src/users/users.service';
 /**
- * @class AuthService responsible for handling authentication business-logic.
+ * AuthService responsible for handling authentication business-logic.
  */
 @Injectable()
 export class AuthService {
   /**
-   * @constructor Creates an instance of AuthService.
+   *  Creates an instance of AuthService.
    *
    * @param {UsersService} usersService - The service responsible for user operations, injected using forwardRef to handle circular dependencies.
    * @param {SignInProvider} signInProvider - The provider responsiable for sign-in process.

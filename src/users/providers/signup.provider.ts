@@ -12,13 +12,12 @@ import { Repository } from 'typeorm';
 import { HashingProvider } from 'src/auth/providers/hashing.provider';
 
 /**
- *  @class SignupProvider for handle the signup logic.
+ *  SignupProvider for handle the signup logic.
  */
-
 @Injectable()
 export class SignupProvider {
   /**
-   * @constructor Creates an instance of SignupProvider.
+   *  Creates an instance of SignupProvider.
    *
    * @param {Repository<User>} usersRepository - Repository to interact with the User entity in the database.
    * @param {HashingProvider} hashingProvider - Service for hashing passwords.

@@ -11,12 +11,12 @@ import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
 /**
- *  @class UsersService responsible for handling user related business-logic.
+ *   UsersService responsible for handling user related business-logic.
  */
 @Injectable()
 export class UsersService {
   /**
-   *  @constructor Creates an instace of UsersService.
+   *   Creates an instace of UsersService.
    *
    * @param {Repository<User>} usersRepository - The repository for intract with user entity in database.
    * @param {SignupProvider} signupProvider - The provider responsible for handling the user signup logic.
