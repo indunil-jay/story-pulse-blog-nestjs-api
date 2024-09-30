@@ -8,6 +8,7 @@ import { SignInProvider } from './providers/sign-in.provider';
 import { ConfigModule } from '@nestjs/config';
 import jwtConfig from './config/jwt.config';
 import { JwtModule } from '@nestjs/jwt';
+import { SignupProvider } from 'src/users/providers/signup.provider';
 
 @Module({
   controllers: [AuthController],

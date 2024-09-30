@@ -1,9 +1,9 @@
 POST http://localhost:3000/auth/sign-up
 Content-Type:application/json
 {
-    "firstName":"mike",
+    "firstName":"jason",
     "lastName":"test",
-    "email":"miketest@gmail.com",
+    "email":"jason@gmail.com",
     "password":"Test123@",
      "confirmPassword":"Test123@",
     "dataOfBirth":"1999-09-09",
