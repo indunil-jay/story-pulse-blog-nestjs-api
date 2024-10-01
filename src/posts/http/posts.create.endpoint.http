@@ -1,16 +1,15 @@
 POST http://localhost:3000/posts/
 Content-Type:application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoiamFzb25AZ21haWwuY29tIiwiaWF0IjoxNzI3Nzg1MjQ5LCJleHAiOjE3Mjc3ODg4NDksImF1ZCI6ImxvY2FsaG9zdDozMDAwIiwiaXNzIjoibG9jYWxob3N0OjMwMDAifQ.DhlTM9hwZGEfFhmCT2GXgIUzXVGEPkETKXobWAOKIpU
 {
-    "title":"this is test post title6",
+    "title":"this is test post title6 uniq",
     "content":"this is content of the post6",
     "coverImageUrl":"http://someurl.org/image.png",
-    "slug":"this-is-content-of-the-post-6",
+    "slug":"this-is-content-of-the-post-6-unique",
     "status":"published",
-    "authorId":1,
-    "tags":[1,2],
+     "tags":[1],
     "metaDataOption":{
-   "metaValue":"{\"backLinks6\":\"https://backlink.org/link-6\"}"
-
+       "metaValue":"{\"backLinks6\":\"https://backlink.org/link-6\"}"
 
     }
 }

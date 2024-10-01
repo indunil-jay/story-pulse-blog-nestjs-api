@@ -16,6 +16,8 @@ import { GetPostParamDTO } from './DTOs/get-post-param.dto';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PatchPostDTO } from './DTOs/patch-post.dto';
 import { GetPostDTO } from './DTOs/get.posts.dto';
+import { ActiveUser } from 'src/auth/decorators/active-user.decorator';
+import { IActiveUser } from 'src/auth/interfaces/active-user.interface';
 
 @ApiTags('Posts')
 @Controller('posts')
@@ -57,7 +59,6 @@ export class PostsController {
     @Param() getPostParamDTO: GetPostParamDTO,
     @Query() postQuery: GetPostDTO,
   ) {
-    
     return this.postsService.findPosts(getPostParamDTO, postQuery);
   }
 
@@ -88,8 +89,11 @@ export class PostsController {
   })
   @Post()
   /** TODO: */
-  public createPosts(@Body() createPostDTO: CreatePostDTO) {
-    return this.postsService.createPost(createPostDTO);
+  public async createPosts(
+    @Body() createPostDTO: CreatePostDTO,
+    @ActiveUser() user: IActiveUser,
+  ) {
+    return this.postsService.createPost(createPostDTO, user);
   }
 
   @Delete('/:id')

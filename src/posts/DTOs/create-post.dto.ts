@@ -122,13 +122,4 @@ export class CreatePostDTO {
   @Type(() => CreateMetaDataDTO)
   @ValidateNested({ each: true })
   metaDataOption?: CreateMetaDataDTO | null;
-
-  //TODO:
-  @ApiProperty({
-    type: 'integer',
-    required: true,
-  })
-  @IsInt()
-  @IsNotEmpty()
-  authorId: number;
 }

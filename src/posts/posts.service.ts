@@ -1,3 +1,4 @@
+import { CreatePostProvider } from './providers/create-post.provider';
 import { PatchPostDTO } from './DTOs/patch-post.dto';
 import { CreatePostDTO } from './DTOs/create-post.dto';
 import { Repository } from 'typeorm';
@@ -15,6 +16,7 @@ import { Tag } from 'src/tags/tag.entity';
 import { GetPostDTO } from './DTOs/get.posts.dto';
 import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
 import { IPaginated } from 'src/common/pagination/interfaces/paginated.interface';
+import { IActiveUser } from 'src/auth/interfaces/active-user.interface';
 
 /**
  * Service to connect to the users table and perform business operations related to posts.
@@ -30,6 +32,8 @@ export class PostsService {
     private readonly tagsService: TagsService,
 
     private readonly paginationProvider: PaginationProvider,
+
+    private readonly createPostProvider: CreatePostProvider,
   ) {}
 
   /** TODO:
@@ -49,20 +53,11 @@ export class PostsService {
   /** TODO:
    * creates a new blog post
    */
-  public async createPost(createPostDTO: CreatePostDTO) {
-    const currentAuthor = await this.usersService.findOneById(
-      createPostDTO.authorId,
-    );
-
-    //find tags
-    const tags = await this.tagsService.findTags(createPostDTO.tags);
-
-    const post = this.postsRepository.create({
-      ...createPostDTO,
-      author: currentAuthor,
-      tags,
-    });
-    return await this.postsRepository.save(post);
+  public async createPost(
+    createPostDTO: CreatePostDTO,
+    user: IActiveUser,
+  ): Promise<Post> {
+    return await this.createPostProvider.createPost(createPostDTO, user);
   }
 
   /** TODO:
