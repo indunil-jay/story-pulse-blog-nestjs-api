@@ -1,3 +1,4 @@
+import { GenerateTokensProvider } from './generate-tokens.provider';
 import { HashingProvider } from 'src/auth/providers/hashing.provider';
 import {
   forwardRef,
@@ -8,9 +9,6 @@ import {
 } from '@nestjs/common';
 import { SignInDTO } from '../DTOs/auth.sign-in.dto';
 import { UsersService } from 'src/users/users.service';
-import { JwtService } from '@nestjs/jwt';
-import { ConfigType } from '@nestjs/config';
-import jwtConfig from '../config/jwt.config';
 
 /**
  *  SigninProvider user to handle the  user sign in business-logic.
@@ -22,8 +20,7 @@ export class SignInProvider {
    *
    * @param {UsersService} usersService - Service to manage user operations.
    * @param {HashingProvider} hashingProvider - Provider for password hashing and comparison.
-   * @param {JwtService} jwtService - Serivce to handle JSON web token.
-   * @param {ConfigType<typeof jwtConfig>} jwtConfiguration -  Configuration for JWT related env
+   * @param {GenerateTokensProvider} generateTokensProvider - Provider for re-generate the refresh and access token.
    */
   constructor(
     @Inject(forwardRef(() => UsersService))
@@ -31,10 +28,7 @@ export class SignInProvider {
 
     private readonly hashingProvider: HashingProvider,
 
-    private readonly jwtService: JwtService,
-
-    @Inject(jwtConfig.KEY)
-    private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
+    private readonly generateTokensProvider: GenerateTokensProvider,
   ) {}
 
   /**
@@ -69,21 +63,7 @@ export class SignInProvider {
     }
 
     // Generate a JSON Web Token for the authenticated user
-    const accessToken = await this.jwtService.signAsync(
-      {
-        sub: user.id,
-        email: user.email,
-      },
-      {
-        audience: this.jwtConfiguration.audience,
-        issuer: this.jwtConfiguration.issuer,
-        secret: this.jwtConfiguration.secret,
-        expiresIn: this.jwtConfiguration.accessTokenTTL,
-      },
-    );
 
-    return {
-      accessToken,
-    };
+    return await this.generateTokensProvider.generateTokens(user);
   }
 }

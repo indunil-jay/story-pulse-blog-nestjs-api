@@ -6,6 +6,7 @@ import { User } from 'src/users/user.entity';
 import { SignInDTO } from './DTOs/auth.sign-in.dto';
 import { Auth } from './decorators/auth.decorator';
 import { AuthType } from './enums/auth-type';
+import { RefreshTokenDTO } from './DTOs/auth.refresh-token.dto';
 
 /**
  *  AuthController responsible for handling authentication-related api routes.
@@ -86,5 +87,29 @@ export class AuthController {
   @Auth(AuthType.None)
   public async signin(@Body() signInDTO: SignInDTO): Promise<boolean> {
     return this.authService.signin(signInDTO);
+  }
+
+  /**
+   * Handles re-genenating the access and refresh token.
+   *
+   * @param {RefreshTokenDTO} refreshTokenDTO - the DTO for containing  refresh roken.
+   * @returns { Promise<{accessToken: string,refreshToken: string}>} - the results of the refrshing process.
+   */
+  @ApiOperation({ summary: 'Refresh access and refresh tokens' })
+  @ApiResponse({
+    status: 200,
+    description: 'Successfully refreshed tokens',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized - invalid or expired refresh token',
+  })
+  @Post('refresh-tokens')
+  @HttpCode(HttpStatus.OK)
+  @Auth(AuthType.None)
+  public async refreshToken(
+    @Body() refreshTokenDTO: RefreshTokenDTO,
+  ): Promise<{ accessToken: string; refreshToken: string }> {
+    return this.authService.refreshTokens(refreshTokenDTO);
   }
 }

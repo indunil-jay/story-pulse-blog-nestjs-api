@@ -1,5 +1,9 @@
 import { registerAs } from '@nestjs/config';
 
+/**
+ *  namespace for database env configurations
+ */
+
 export default registerAs('database', () => ({
   host: process.env.DATATBASE_HOST || 'localhost',
   port: parseInt(process.env.DATABASE_PORT) || 5432,

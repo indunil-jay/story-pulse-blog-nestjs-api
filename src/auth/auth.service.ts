@@ -1,10 +1,12 @@
+import { RefreshTokensProvider } from './providers/refresh-tokens.provider';
+import { RefreshTokenDTO } from './DTOs/auth.refresh-token.dto';
 import { SignInProvider } from './providers/sign-in.provider';
 import { SignInDTO } from './DTOs/auth.sign-in.dto';
 import { SignUpDTO } from './DTOs/auth.sign-up.dto';
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { User } from 'src/users/user.entity';
-
 import { UsersService } from 'src/users/users.service';
+
 /**
  * AuthService responsible for handling authentication business-logic.
  */
@@ -22,6 +24,8 @@ export class AuthService {
     private readonly usersService: UsersService,
 
     private readonly signInProvider: SignInProvider,
+
+    private readonly refreshTokensProvider: RefreshTokensProvider,
   ) {}
 
   /**
@@ -42,5 +46,19 @@ export class AuthService {
    */
   public async signin(signInDTO: SignInDTO): Promise<any> {
     return await this.signInProvider.signin(signInDTO);
+  }
+
+  /**
+   *  Refresh the tokens by delegating to RefreshTokensProvider
+   *
+   *  @param {RefreshTokenDTO} refreshTokenDTO -The data transfer object containing refresh token.
+   *  @returns {Promise<{accessToken: string, refreshToken: string}>} -  the results of th  re-generation of tokens.
+   */
+
+  public async refreshTokens(refreshTokenDTO: RefreshTokenDTO): Promise<{
+    accessToken: string;
+    refreshToken: string;
+  }> {
+    return await this.refreshTokensProvider.refreshTokens(refreshTokenDTO);
   }
 }
