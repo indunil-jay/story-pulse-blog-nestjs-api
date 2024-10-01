@@ -1,6 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserRole } from './enums/users.roles.enum';
 import { Post } from 'src/posts/post.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class User {
@@ -32,12 +33,14 @@ export class User {
     type: 'varchar',
     nullable: true,
   })
+  @Exclude()
   password?: string; //edited for google auth
 
   @Column({
     type: 'varchar',
     nullable: true,
   })
+  @Exclude()
   googleId?: string;
 
   @Column({

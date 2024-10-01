@@ -1,5 +1,13 @@
 import { SignUpDTO } from './DTOs/auth.sign-up.dto';
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  UseInterceptors,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { User } from 'src/users/user.entity';
@@ -52,6 +60,7 @@ export class AuthController {
   })
   @Post('sign-up')
   @Auth(AuthType.None)
+  @UseInterceptors(ClassSerializerInterceptor)
   public async signup(@Body() signUpDTO: SignUpDTO): Promise<User> {
     return this.authService.signup(signUpDTO);
   }
