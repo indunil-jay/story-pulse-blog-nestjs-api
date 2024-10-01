@@ -7,6 +7,8 @@ import { UsersService } from './users.service';
 import { AuthModule } from 'src/auth/auth.module';
 import { SignupProvider } from './providers/signup.provider';
 import { FindOneUserByEmailProvider } from './providers/find-one-user-by-email.provider';
+import { FindOneByGoogleIdProvider } from './providers/find-one-by-google-id.provider';
+import { CreateGoogleUserProvider } from './providers/create-google-user.provider';
 
 @Module({
   controllers: [UsersController],
@@ -15,6 +17,8 @@ import { FindOneUserByEmailProvider } from './providers/find-one-user-by-email.p
     UsersService,
     SignupProvider,
     FindOneUserByEmailProvider,
+    FindOneByGoogleIdProvider,
+    CreateGoogleUserProvider,
     // UsersCreateManyProvider,
   ],
   exports: [UsersService],

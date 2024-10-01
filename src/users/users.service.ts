@@ -1,3 +1,5 @@
+import { CreateGoogleUserProvider } from './providers/create-google-user.provider';
+import { FindOneByGoogleIdProvider } from './providers/find-one-by-google-id.provider';
 import { UsersCreateManyProvider } from './providers/users.create-many.provider';
 import { FindOneUserByEmailProvider } from './providers/find-one-user-by-email.provider';
 import { SignupProvider } from './providers/signup.provider';
@@ -10,6 +12,7 @@ import {
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { IGoogleUser } from './interfaces/google-user.interface';
 // import { CreateManyUsersDTO } from './DTOs/create-many-user.dto';
 
 /**
@@ -34,6 +37,10 @@ export class UsersService {
 
     private readonly findOneUserByEmailProvider: FindOneUserByEmailProvider,
 
+    private readonly findOneByGoogleIdProvider: FindOneByGoogleIdProvider,
+
+    private readonly createGoogleUserProvider: CreateGoogleUserProvider,
+
     // TODO:
     // private readonly usersCreateManyProvider: UsersCreateManyProvider,
   ) {}
@@ -46,8 +53,8 @@ export class UsersService {
    *
    */
 
-  public signup(signUpDTO: SignUpDTO): Promise<User> {
-    return this.signupProvider.signup(signUpDTO);
+  public async signup(signUpDTO: SignUpDTO): Promise<User> {
+    return await this.signupProvider.signup(signUpDTO);
   }
 
   /**
@@ -57,8 +64,30 @@ export class UsersService {
 
    */
 
-  public findOneByEmail(email: string): Promise<User> {
-    return this.findOneUserByEmailProvider.findOneByEmail(email);
+  public async findOneByEmail(email: string): Promise<User> {
+    return await this.findOneUserByEmailProvider.findOneByEmail(email);
+  }
+
+  /**
+   * Finds a user by google, delegating the the FindOneByGoogleIdProvider.
+   * @param {string} googleId - the googleId which use to search user.
+   * @returns {Promise<User>} The result of the search.
+
+   */
+
+  public async findOneByGoogleId(googleId: string): Promise<User> {
+    return await this.findOneByGoogleIdProvider.findOneByGoogleId(googleId);
+  }
+
+  /**
+   * create a user by google's data, delegating the the `CreateGoogleUserProvider`.
+   * @param {IGoogleUser} googleUser - the user interface for create user with google data.
+   * @returns {Promise<User>} The result of the search.
+
+   */
+
+  public async createGoogleUser(googleUser: IGoogleUser): Promise<User> {
+    return await this.createGoogleUserProvider.createGoogleUser(googleUser);
   }
 
   /** TODO: */

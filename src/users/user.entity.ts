@@ -30,9 +30,15 @@ export class User {
 
   @Column({
     type: 'varchar',
-    nullable: false,
+    nullable: true,
   })
-  password: string;
+  password?: string; //edited for google auth
+
+  @Column({
+    type: 'varchar',
+    nullable: true,
+  })
+  googleId?: string;
 
   @Column({
     type: 'timestamp',
