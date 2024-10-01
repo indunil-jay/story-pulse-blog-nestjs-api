@@ -4,6 +4,8 @@ import { AuthService } from './auth.service';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { User } from 'src/users/user.entity';
 import { SignInDTO } from './DTOs/auth.sign-in.dto';
+import { Auth } from './decorators/auth.decorator';
+import { AuthType } from './enums/auth-type';
 
 /**
  *  AuthController responsible for handling authentication-related api routes.
@@ -48,6 +50,7 @@ export class AuthController {
       'Internal Server Error. An unexpected error occurred on the server while processing the request.',
   })
   @Post('sign-up')
+  @Auth(AuthType.None)
   public async signup(@Body() signUpDTO: SignUpDTO): Promise<User> {
     return this.authService.signup(signUpDTO);
   }
@@ -80,6 +83,7 @@ export class AuthController {
   })
   @Post('sign-in')
   @HttpCode(HttpStatus.OK)
+  @Auth(AuthType.None)
   public async signin(@Body() signInDTO: SignInDTO): Promise<boolean> {
     return this.authService.signin(signInDTO);
   }

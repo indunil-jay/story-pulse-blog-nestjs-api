@@ -1,3 +1,4 @@
+import { UsersCreateManyProvider } from './providers/users.create-many.provider';
 import { FindOneUserByEmailProvider } from './providers/find-one-user-by-email.provider';
 import { SignupProvider } from './providers/signup.provider';
 import { SignUpDTO } from './../auth/DTOs/auth.sign-up.dto';
@@ -9,6 +10,7 @@ import {
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+// import { CreateManyUsersDTO } from './DTOs/create-many-user.dto';
 
 /**
  *   UsersService responsible for handling user related business-logic.
@@ -31,6 +33,9 @@ export class UsersService {
     private readonly signupProvider: SignupProvider,
 
     private readonly findOneUserByEmailProvider: FindOneUserByEmailProvider,
+
+    // TODO:
+    // private readonly usersCreateManyProvider: UsersCreateManyProvider,
   ) {}
 
   /**

@@ -13,9 +13,13 @@ import { AuthModule } from './auth/auth.module';
 import databaseConfig from './config/database.config';
 import appConfig from './config/app.config';
 import envValidation from './config/env.validation';
+import { APP_GUARD } from '@nestjs/core';
+import { AccessTokenGuard } from './auth/guards/access-token/access-token.guard';
+import jwtConfig from './auth/config/jwt.config';
+import { JwtModule } from '@nestjs/jwt';
+import { AuthenticationGuard } from './auth/guards/authentication/authentication.guard';
 
 const ENV = process.env.NODE_ENV;
-console.log(ENV);
 
 @Module({
   imports: [
@@ -48,8 +52,18 @@ console.log(ENV);
     UsersModule,
     PaginationModule,
     AuthModule,
+
+    ConfigModule.forFeature(jwtConfig),
+    JwtModule.registerAsync(jwtConfig.asProvider()),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthenticationGuard,
+    },
+    AccessTokenGuard,
+  ],
 })
 export class AppModule {}
