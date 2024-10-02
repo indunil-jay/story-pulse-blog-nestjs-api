@@ -1,3 +1,4 @@
+import { MailService } from './../../mail/mail.service';
 import {
   BadRequestException,
   forwardRef,
@@ -28,6 +29,8 @@ export class SignupProvider {
 
     @Inject(forwardRef(() => HashingProvider))
     private readonly hashingProvider: HashingProvider,
+
+    private readonly mailService: MailService,
   ) {}
 
   /**
@@ -73,6 +76,15 @@ export class SignupProvider {
       throw new RequestTimeoutException(
         'Unable to process your request at the moment please try later.',
         { description: 'error connecting to the database.' },
+      );
+    }
+    //send email
+    try {
+      await this.mailService.sendUserWelcome(user);
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment please try later.',
+        { description: 'error sending email' },
       );
     }
     return user;

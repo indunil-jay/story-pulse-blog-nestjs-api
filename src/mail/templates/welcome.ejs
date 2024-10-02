@@ -1,0 +1,72 @@
+<div
+  style="
+    font-family: Arial, sans-serif;
+    color: #333;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+  "
+>
+  <!-- Header Section with Logo -->
+  <div
+    style="
+      text-align: center;
+      padding: 10px 0;
+      background-color: #28a745;
+      border-radius: 8px 8px 0 0;
+    "
+  >
+    <h1 style="color: #ffffff; font-size: 24px; margin: 0">Story Pulse</h1>
+  </div>
+
+  <!-- Content Section -->
+  <div style="padding: 20px; background-color: #f9f9f9">
+    <p style="font-size: 18px; color: #2d2d2d">Dear <%= name %>,</p>
+
+    <p style="font-size: 16px; color: #2d2d2d">
+      Welcome to
+      <span style="color: #28a745; font-weight: bold">Story Pulse</span>! We're
+      thrilled to have you in our vibrant community of storytellers.
+    </p>
+
+    <p style="font-size: 16px; color: #2d2d2d">
+      Below are your account details:
+    </p>
+
+    <ul style="list-style-type: none; padding-left: 0">
+      <li style="font-size: 16px; color: #2d2d2d; margin-bottom: 8px">
+        <strong>Email:</strong> <%= email %>
+      </li>
+      <li style="font-size: 16px; color: #2d2d2d">
+        <strong>Login URL:</strong>
+        <a href="<%= loginUrl %>" style="color: #28a745; text-decoration: none"
+          ><%= loginUrl %></a
+        >
+      </li>
+    </ul>
+
+    <p style="font-size: 16px; color: #2d2d2d">
+      If you have any questions or need assistance, don't hesitate to contact
+      us. We're here to support you!
+    </p>
+  </div>
+
+  <!-- Footer Section -->
+  <div
+    style="
+      text-align: center;
+      padding: 20px;
+      background-color: #28a745;
+      border-radius: 0 0 8px 8px;
+    "
+  >
+    <p style="font-size: 16px; color: #ffffff; margin: 0">
+      Best regards,<br />
+      <span style="font-weight: bold">Story Pulse Support Team</span>
+    </p>
+  </div>
+</div>
