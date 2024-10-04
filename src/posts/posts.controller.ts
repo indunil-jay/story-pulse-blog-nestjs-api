@@ -104,11 +104,14 @@ export class PostsController {
     return this.postsService.createPost(createPostDTO, user);
   }
 
-  @Roles(UserRole.ADMIN)
+  @Roles(UserRole.ADMIN, UserRole.USER)
   @Delete('/:id')
   /** Delete a post by id */
-  public deletePosts(@Param('id', ParseIntPipe) id: number) {
-    return this.postsService.deletePost(id);
+  public deletePosts(
+    @Param('id', ParseIntPipe) id: number,
+    @ActiveUser() user: IActiveUser,
+  ) {
+    return this.postsService.deletePost(id, user);
   }
 
   @Patch()

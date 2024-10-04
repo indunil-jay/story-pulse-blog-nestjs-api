@@ -1,3 +1,4 @@
+import { DeletePostProvider } from './providers/delete-post.provider';
 import { CreatePostProvider } from './providers/create-post.provider';
 import { PatchPostDTO } from './DTOs/patch-post.dto';
 import { CreatePostDTO } from './DTOs/create-post.dto';
@@ -5,7 +6,9 @@ import { Repository } from 'typeorm';
 import { GetPostParamDTO } from './DTOs/get-post-param.dto';
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
+  NotFoundException,
   RequestTimeoutException,
 } from '@nestjs/common';
 import { Post } from './post.entity';
@@ -17,6 +20,7 @@ import { GetPostDTO } from './DTOs/get.posts.dto';
 import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
 import { IPaginated } from 'src/common/pagination/interfaces/paginated.interface';
 import { IActiveUser } from 'src/auth/interfaces/active-user.interface';
+import { UserRole } from 'src/users/enums/users.roles.enum';
 
 /**
  * Service to connect to the users table and perform business operations related to posts.
@@ -32,6 +36,8 @@ export class PostsService {
     private readonly paginationProvider: PaginationProvider,
 
     private readonly createPostProvider: CreatePostProvider,
+
+    private readonly deletePostProvider: DeletePostProvider,
   ) {}
 
   /** TODO:
@@ -58,11 +64,13 @@ export class PostsService {
     return await this.createPostProvider.createPost(createPostDTO, user);
   }
 
-  /** TODO:
-   * delete a blog post by id
+  /**
+   * Delete a post based on a id and user roles.
+   * USER.ADMIN can delete any post
+   * USER.USER can delete own post
    */
-  public async deletePost(id: number) {
-    return await this.postsRepository.delete({ id });
+  public async deletePost(id: number, user: IActiveUser) {
+    return await this.deletePostProvider.deletePost(id, user);
   }
 
   /** TODO:
