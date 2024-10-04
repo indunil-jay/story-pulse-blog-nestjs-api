@@ -27,8 +27,6 @@ export class PostsService {
     @InjectRepository(Post)
     private readonly postsRepository: Repository<Post>,
 
-    private readonly usersService: UsersService,
-
     private readonly tagsService: TagsService,
 
     private readonly paginationProvider: PaginationProvider,

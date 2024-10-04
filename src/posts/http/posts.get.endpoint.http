@@ -1,9 +1,4 @@
-{{
- const date  = new Date()
- exports.startDate = date.toString()
- exports.endDate = date.toString()
-}}
 
-GET http://localhost:3000/posts/
-?limit=1
-&page=1
+
+GET http://localhost:3000/posts/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJpYXQiOjE3MjgwMTk0OTksImV4cCI6MTcyODAyMzA5OSwiYXVkIjoibG9jYWxob3N0OjMwMDAiLCJpc3MiOiJsb2NhbGhvc3Q6MzAwMCJ9.7cfUAKv7hH7b0Ntetzzu3xKnAf8av1QxFQImhxoieBA

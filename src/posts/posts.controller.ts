@@ -18,10 +18,20 @@ import { PatchPostDTO } from './DTOs/patch-post.dto';
 import { GetPostDTO } from './DTOs/get.posts.dto';
 import { ActiveUser } from 'src/auth/decorators/active-user.decorator';
 import { IActiveUser } from 'src/auth/interfaces/active-user.interface';
+import { Roles } from 'src/auth/decorators/role.decorator';
+import { UserRole } from 'src/users/enums/users.roles.enum';
+
+/**
+ * Responsible for handling  post related routes.
+ */
 
 @ApiTags('Posts')
 @Controller('posts')
 export class PostsController {
+  /**
+   *
+   * @param {PostsService} postsService- inject post service for handling post related operations.
+   */
   constructor(private readonly postsService: PostsService) {}
 
   @ApiQuery({
@@ -54,7 +64,6 @@ export class PostsController {
     description: 'Post not found (for single post requests).',
   })
   @Get('/:id?')
-  /** TODO: */
   public getPosts(
     @Param() getPostParamDTO: GetPostParamDTO,
     @Query() postQuery: GetPostDTO,
@@ -88,7 +97,6 @@ export class PostsController {
       'Internal Server Error. An unexpected error occurred on the server while processing the request.',
   })
   @Post()
-  /** TODO: */
   public async createPosts(
     @Body() createPostDTO: CreatePostDTO,
     @ActiveUser() user: IActiveUser,
@@ -96,8 +104,9 @@ export class PostsController {
     return this.postsService.createPost(createPostDTO, user);
   }
 
+  @Roles(UserRole.ADMIN)
   @Delete('/:id')
-  /** TODO: */
+  /** Delete a post by id */
   public deletePosts(@Param('id', ParseIntPipe) id: number) {
     return this.postsService.deletePost(id);
   }

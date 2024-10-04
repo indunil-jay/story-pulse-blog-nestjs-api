@@ -69,7 +69,9 @@ export class GenerateTokensProvider {
    * - An object containing the generated access and refresh tokens.
    *
    */
-  public async generateTokens(user: User) {
+  public async generateTokens(
+    user: User,
+  ): Promise<{ accessToken: string; refreshToken: string }> {
     const [accessToken, refreshToken] = await Promise.all([
       // Generate the access token
       this.signToken<Partial<IActiveUser>>(
