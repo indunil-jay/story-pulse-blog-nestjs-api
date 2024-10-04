@@ -70,6 +70,12 @@ export class PostsController {
     return this.postsService.findPosts(getPostParamDTO, postQuery);
   }
 
+  /**
+   *  Routes for handle create  a post
+   * @param {CreatePostDTO} createPostDTO - DTO for post
+   * @param {IActiveUser} user - get current signed user from request.
+   * @returns  - created post
+   */
   @ApiOperation({
     summary: 'Create a new blog post.',
     description:
@@ -103,9 +109,38 @@ export class PostsController {
     return this.postsService.createPost(createPostDTO, user);
   }
 
+  /**
+   *  Routes for handle delete  by id
+   * @param {number} id - id for delete post
+   * @param {IActiveUser} user - get current signed user from request.
+   * @returns  - deleted results resonse
+   */
+
+  @ApiOperation({
+    summary: 'Delete a existing post.',
+    description:
+      'Allows authenicated user to delete a post (admin can delete any post,and user can delete own posts)',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Post deleted successfully.',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request. post does not found or something went wrong.',
+  })
+  @ApiResponse({
+    status: 401,
+    description:
+      'Unauthorized. The user is not authenticated and cannot delete a blog post.',
+  })
+  @ApiResponse({
+    status: 500,
+    description:
+      'Internal Server Error. An unexpected error occurred on the server while processing the request.',
+  })
   @Roles(UserRole.ADMIN, UserRole.USER)
   @Delete('/:id')
-  /** Delete a post by id */
   public deletePosts(
     @Param('id', ParseIntPipe) id: number,
     @ActiveUser() user: IActiveUser,
@@ -119,6 +154,31 @@ export class PostsController {
    * @param user - get current signed user from request.
    * @returns  - updated post
    */
+
+  @ApiOperation({
+    summary: 'Update a existing post.',
+    description: 'Allows update the existing post for authenicated user.',
+  })
+  @ApiResponse({
+    status: 200,
+    description:
+      'Post updated successfully. The response includes the updated post data.',
+  })
+  @ApiResponse({
+    status: 400,
+    description:
+      'Bad Request. The input data does not meet validation requirements (e.g., missing required fields or invalid data format).',
+  })
+  @ApiResponse({
+    status: 401,
+    description:
+      'Unauthorized. The user is not authenticated and cannot updated a blog post.',
+  })
+  @ApiResponse({
+    status: 500,
+    description:
+      'Internal Server Error. An unexpected error occurred on the server while processing the request.',
+  })
   @Patch()
   public async updatePost(
     @Body() patchPostDTO: PatchPostDTO,
