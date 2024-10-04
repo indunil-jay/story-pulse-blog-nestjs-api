@@ -33,6 +33,12 @@ export class PostsController {
    */
   constructor(private readonly postsService: PostsService) {}
 
+  /**
+   * Routes for handle get post by Id or get  all posts
+   * @param {GetPostParamDTO} getPostParamDTO  -  post id details.
+   * @param postQuery - details related to pagination
+   * @returns
+   */
   @ApiQuery({
     name: 'limit',
     type: 'number',
