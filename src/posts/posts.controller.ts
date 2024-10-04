@@ -2,7 +2,6 @@ import { PostsService } from './posts.service';
 import {
   Body,
   Controller,
-  DefaultValuePipe,
   Delete,
   Get,
   Param,
@@ -30,7 +29,7 @@ import { UserRole } from 'src/users/enums/users.roles.enum';
 export class PostsController {
   /**
    *
-   * @param {PostsService} postsService- inject post service for handling post related operations.
+   * @param {PostsService} postsService - inject post service for handling post related operations.
    */
   constructor(private readonly postsService: PostsService) {}
 
@@ -114,8 +113,17 @@ export class PostsController {
     return this.postsService.deletePost(id, user);
   }
 
+  /**
+   *  Routes for handle post updates by id
+   * @param patchPostDTO - DTO for updates post
+   * @param user - get current signed user from request.
+   * @returns  - updated post
+   */
   @Patch()
-  public updatePost(@Body() patchPostDTO: PatchPostDTO) {
-    return this.postsService.updatePost(patchPostDTO);
+  public async updatePost(
+    @Body() patchPostDTO: PatchPostDTO,
+    @ActiveUser() user: IActiveUser,
+  ) {
+    return this.postsService.updatePost(patchPostDTO, user);
   }
 }

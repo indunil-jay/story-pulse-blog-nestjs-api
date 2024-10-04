@@ -1,11 +1,11 @@
 POST http://localhost:3000/posts/
 Content-Type:application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJpYXQiOjE3MjgwMTk0OTksImV4cCI6MTcyODAyMzA5OSwiYXVkIjoibG9jYWxob3N0OjMwMDAiLCJpc3MiOiJsb2NhbGhvc3Q6MzAwMCJ9.7cfUAKv7hH7b0Ntetzzu3xKnAf8av1QxFQImhxoieBA
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidGFya0BnbWFpbC5jb20iLCJpYXQiOjE3MjgwMjgwODMsImV4cCI6MTcyODAzMTY4MywiYXVkIjoibG9jYWxob3N0OjMwMDAiLCJpc3MiOiJsb2NhbGhvc3Q6MzAwMCJ9.imTdyDYKz14RDKlpW6ryj23idnXrJHpA1Kq2YSOh7fI
 {
-    "title":"this is test post title3",
-    "content":"this is content of the post-3",
+    "title":"this is test post title1",
+    "content":"this is content of the post-1",
     "coverImageUrl":"http://someurl.org/image.png",
-    "slug":"this-is-content-of-the-post-3",
+    "slug":"this-is-content-of-the-post-1",
     "status":"published",
      "tags":[1],
     "metaDataOption":{

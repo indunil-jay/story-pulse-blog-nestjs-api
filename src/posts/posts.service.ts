@@ -1,3 +1,4 @@
+import { UpdatePostProvider } from './providers/update-post.provider';
 import { DeletePostProvider } from './providers/delete-post.provider';
 import { CreatePostProvider } from './providers/create-post.provider';
 import { PatchPostDTO } from './DTOs/patch-post.dto';
@@ -13,14 +14,12 @@ import {
 } from '@nestjs/common';
 import { Post } from './post.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UsersService } from 'src/users/users.service';
 import { TagsService } from 'src/tags/tags.service';
 import { Tag } from 'src/tags/tag.entity';
 import { GetPostDTO } from './DTOs/get.posts.dto';
 import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
 import { IPaginated } from 'src/common/pagination/interfaces/paginated.interface';
 import { IActiveUser } from 'src/auth/interfaces/active-user.interface';
-import { UserRole } from 'src/users/enums/users.roles.enum';
 
 /**
  * Service to connect to the users table and perform business operations related to posts.
@@ -38,6 +37,8 @@ export class PostsService {
     private readonly createPostProvider: CreatePostProvider,
 
     private readonly deletePostProvider: DeletePostProvider,
+
+    private readonly updatePostProvider: UpdatePostProvider,
   ) {}
 
   /** TODO:
@@ -54,8 +55,8 @@ export class PostsService {
     );
   }
 
-  /** TODO:
-   * creates a new blog post
+  /**
+   * creates a new blog post method delegated to the `createPostProvider`.
    */
   public async createPost(
     createPostDTO: CreatePostDTO,
@@ -65,7 +66,7 @@ export class PostsService {
   }
 
   /**
-   * Delete a post based on a id and user roles.
+   * Delete a post based on a id and user roles method delegated to `the deletePostProvider`.
    * USER.ADMIN can delete any post
    * USER.USER can delete own post
    */
@@ -73,62 +74,15 @@ export class PostsService {
     return await this.deletePostProvider.deletePost(id, user);
   }
 
-  /** TODO:
-   * update a blog post
+  /**
+   * update a blog post method delegated to `the updatedPostProvider`
+   * post's author can update thier own
    */
 
-  public async updatePost(patchPostDTO: PatchPostDTO) {
-    let post: Post | undefined = undefined;
-    //Find the post
-    try {
-      post = await this.postsRepository.findOneBy({ id: patchPostDTO.id });
-    } catch (error) {
-      throw new RequestTimeoutException(
-        'Unable to process your request at the moment please try later.',
-        { description: 'error connecting to the database.' },
-      );
-    }
-
-    if (!post) {
-      throw new BadRequestException('There is a no post with that ID.');
-    }
-
-    //Update post
-    post.title = patchPostDTO.title ?? post.title;
-    post.content = patchPostDTO.content ?? post.content;
-    post.status = patchPostDTO.status ?? post.status;
-    post.slug = patchPostDTO.slug ?? post.slug;
-    post.publishedOn = patchPostDTO.publishedOn ?? post.publishedOn;
-    post.coverImageUrl = patchPostDTO.coverImageUrl ?? post.coverImageUrl;
-
-    let tags: Tag[] | [] = [];
-    try {
-      if (patchPostDTO.tags) {
-        tags = await this.tagsService.findTags(patchPostDTO.tags);
-        post.tags = tags;
-      }
-    } catch (error) {
-      throw new RequestTimeoutException(
-        'Unable to process your request at the moment please try later.',
-        { description: 'error connecting to the database.' },
-      );
-    }
-
-    if (!tags || tags.length !== patchPostDTO.tags.length) {
-      throw new BadRequestException(
-        'Please check yoyr tags IDs and ensure they are correct.',
-      );
-    }
-
-    try {
-      post = await this.postsRepository.save(post);
-    } catch (error) {
-      throw new RequestTimeoutException(
-        'Unable to process your request at the moment please try later.',
-        { description: 'error connecting to the database.' },
-      );
-    }
-
-    return post;
+  public async updatePost(
+    patchPostDTO: PatchPostDTO,
+    user: IActiveUser,
+  ): Promise<Post> {
+    return await this.updatePostProvider.updatePost(patchPostDTO, user);
   }
 }
