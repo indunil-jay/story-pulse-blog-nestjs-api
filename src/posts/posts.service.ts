@@ -1,10 +1,8 @@
-import { FindPostByIdProvider } from './providers/find-post-by-id.provider';
 import { GetPostsProvider } from './providers/get-posts.provider';
 import { UpdatePostProvider } from './providers/update-post.provider';
 import { DeletePostProvider } from './providers/delete-post.provider';
 import { CreatePostProvider } from './providers/create-post.provider';
 import { PatchPostDTO } from './DTOs/patch-post.dto';
-import { GetPostParamDTO } from './DTOs/get-post-param.dto';
 import { Injectable } from '@nestjs/common';
 import { Post } from './post.entity';
 import { GetPostDTO } from './DTOs/get.posts.dto';
@@ -25,7 +23,7 @@ export class PostsService {
    * @param {DeletePostProvider} deletePostProvider - Provider responsible for deleting posts.
    * @param {UpdatePostProvider} updatePostProvider - Provider responsible for updating existing posts.
    * @param {GetPostsProvider} getPostsProvider - Provider responsible for fetching multiple posts.
-   * @param {FindPostByIdProvider} findPostByIdProvider - Provider responsible for finding a specific post by ID.
+
    */
   constructor(
     private readonly createPostProvider: CreatePostProvider,
@@ -35,8 +33,6 @@ export class PostsService {
     private readonly updatePostProvider: UpdatePostProvider,
 
     private readonly getPostsProvider: GetPostsProvider,
-
-    private readonly findPostByIdProvider: FindPostByIdProvider,
   ) {}
 
   /**
@@ -46,19 +42,8 @@ export class PostsService {
    * @param {GetPostDTO} postQuery - Query parameters used to filter the posts.
    * @returns {Promise<Post[]>} - A list of posts matching the query.
    */
-  public async findAllPosts(postQuery: GetPostDTO): Promise<IPaginated<Post>> {
-    return await this.getPostsProvider.findAllPosts(postQuery);
-  }
-
-  /**
-   * Retrieves a single post by its ID.
-   * This method delegates its functionality to the `FindPostByIdProvider`.
-   *
-   * @param {number} id - The ID of the post to retrieve.
-   * @returns {Promise<Post>} - The post found, or an error if it doesn't exist.
-   */
-  public async findPostById(id: number): Promise<Post> {
-    return await this.findPostByIdProvider.findPostById(id);
+  public async findPosts(postQuery: GetPostDTO): Promise<IPaginated<Post>> {
+    return await this.getPostsProvider.findPosts(postQuery);
   }
 
   /**

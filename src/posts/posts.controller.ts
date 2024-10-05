@@ -76,42 +76,7 @@ export class PostsController {
   @Get()
   @Auth(AuthType.None)
   public async getPosts(@Query() postQuery: GetPostDTO) {
-    return this.postsService.findAllPosts(postQuery);
-  }
-
-  /**
-   * Routes for handle get post by Id or
-   * @param {number} id  -  post id details.
-   * @returns
-   */
-  @ApiParam({
-    name: 'id',
-    type: 'number',
-    required: true,
-    description: 'The post  id which request to get',
-    example: 1,
-  })
-  @ApiOperation({
-    summary: 'Fetch a corresponding post match to the passed Id.',
-    description: 'Retrieves  a single post by its ID.',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Posts fetched successfully.',
-  })
-  @ApiResponse({
-    status: 404,
-    description: 'Post not found',
-  })
-  @ApiResponse({
-    status: 500,
-    description:
-      'Internal Server Error. An unexpected error occurred on the server while processing the request.',
-  })
-  @Get('/:id')
-  @Auth(AuthType.None)
-  public async getPostById(@Param('id', ParseIntPipe) id: number) {
-    return this.postsService.findPostById(id);
+    return this.postsService.findPosts(postQuery);
   }
 
   /**

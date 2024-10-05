@@ -11,7 +11,6 @@ import { CreatePostProvider } from './providers/create-post.provider';
 import { DeletePostProvider } from './providers/delete-post.provider';
 import { UpdatePostProvider } from './providers/update-post.provider';
 import { GetPostsProvider } from './providers/get-posts.provider';
-import { FindPostByIdProvider } from './providers/find-post-by-id.provider';
 
 @Module({
   controllers: [PostsController],
@@ -21,7 +20,6 @@ import { FindPostByIdProvider } from './providers/find-post-by-id.provider';
     DeletePostProvider,
     UpdatePostProvider,
     GetPostsProvider,
-    FindPostByIdProvider,
   ],
   imports: [
     TypeOrmModule.forFeature([Post, MetaData]),

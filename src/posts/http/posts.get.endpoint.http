@@ -4,3 +4,9 @@ GET http://localhost:3000/posts/
 
 
 
+GET http://localhost:3000/posts/?postId=3
+
+GET http://localhost:3000/posts/?userId=1
+
+
+GET http://localhost:3000/posts/?userId=1&postId=3
