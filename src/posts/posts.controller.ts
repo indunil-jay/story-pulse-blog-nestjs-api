@@ -28,7 +28,6 @@ import { UserRole } from 'src/users/enums/users.roles.enum';
 @Controller('posts')
 export class PostsController {
   /**
-   *
    * @param {PostsService} postsService - inject post service for handling post related operations.
    */
   constructor(private readonly postsService: PostsService) {}
@@ -68,12 +67,9 @@ export class PostsController {
     status: 404,
     description: 'Post not found (for single post requests).',
   })
-  @Get('/:id?')
-  public getPosts(
-    @Param() getPostParamDTO: GetPostParamDTO,
-    @Query() postQuery: GetPostDTO,
-  ) {
-    return this.postsService.findPosts(getPostParamDTO, postQuery);
+  @Get()
+  public async getPosts(@Query() postQuery: GetPostDTO) {
+    return this.postsService.findAllPosts(postQuery);
   }
 
   /**

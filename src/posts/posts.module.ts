@@ -10,10 +10,13 @@ import { PaginationModule } from 'src/common/pagination/pagination.module';
 import { CreatePostProvider } from './providers/create-post.provider';
 import { DeletePostProvider } from './providers/delete-post.provider';
 import { UpdatePostProvider } from './providers/update-post.provider';
+import { GetPostProvider } from './providers/get--post.provider';
+import { GetPostsProvider } from './providers/get-posts.provider';
+import { GetPostByIdProvider } from './providers/get-post-by-id.provider';
 
 @Module({
   controllers: [PostsController],
-  providers: [PostsService, CreatePostProvider, DeletePostProvider, UpdatePostProvider],
+  providers: [PostsService, CreatePostProvider, DeletePostProvider, UpdatePostProvider, GetPostProvider, GetPostsProvider, GetPostByIdProvider],
   imports: [
     TypeOrmModule.forFeature([Post, MetaData]),
     UsersModule,

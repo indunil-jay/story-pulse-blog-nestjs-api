@@ -13,16 +13,15 @@ import { Tag } from 'src/tags/tag.entity';
 import { IActiveUser } from 'src/auth/interfaces/active-user.interface';
 
 /**
- *  Provider for handle post update business-logic
+ * Service responsible for handling the business logic of updating posts.
  */
-
 @Injectable()
 export class UpdatePostProvider {
   /**
-   * Creates an instance of `UpdatePostProvider`  with injected service dependecies.
+   * Constructor to inject necessary dependencies for post update logic.
    *
-   * @param {Repository<Post>} postsRepository - Repository for  communiate with post table in database.
-   * @param {TagsService} tagsService - inject tag service for interact with tag releted services.
+   * @param {Repository<Post>} postsRepository - TypeORM repository for managing `Post` entity database operations.
+   * @param {TagsService} tagsService - Service to handle tag-related operations like fetching and validating tags.
    */
   constructor(
     @InjectRepository(Post)
@@ -31,36 +30,47 @@ export class UpdatePostProvider {
   ) {}
 
   /**
+   * Updates a post based on the provided data and the authenticated user's identity.
    *
-   * @param  {PatchPostDTO} patchPostDTO - data transfer object for update the post
-   * @returns {Promise<Post>} - returns  the updated post
+   * @param {PatchPostDTO} patchPostDTO - Data Transfer Object containing the updated post fields (title, content, etc.).
+   * @param {IActiveUser} user - Authenticated user's details, with `sub` representing the user ID.
+   *
+   * @throws {RequestTimeoutException} If there's a connection issue with the database during fetching or saving operations.
+   * @throws {ForbiddenException} If the authenticated user is not the author of the post.
+   * @throws {BadRequestException} If the post does not exist or if there is an issue with the provided tags.
+   *
+   * @returns {Promise<Post>} The updated post entity after successful update and save.
    */
   public async updatePost(
     patchPostDTO: PatchPostDTO,
     user: IActiveUser,
   ): Promise<Post> {
-    console.log('PROVIDER', patchPostDTO);
     let post: Post | undefined = undefined;
-    //Find the post
+
+    // Fetch the post by ID from the database
     try {
       post = await this.postsRepository.findOneBy({ id: patchPostDTO.id });
     } catch (error) {
       throw new RequestTimeoutException(
-        'Unable to process your request at the moment please try later.',
-        { description: 'error connecting to the database.' },
+        'Unable to process your request at the moment. Please try again later.',
+        {
+          description:
+            'Error connecting to the database while fetching the post.',
+        },
       );
     }
 
-    //check signed user and post.author.id equals
-    if (user.sub !== post.author.id) {
-      throw new ForbiddenException('You can only updates your own posts');
-    }
-
+    // Check if the post exists
     if (!post) {
-      throw new BadRequestException('There is a no post with that ID.');
+      throw new BadRequestException('No post found with the provided ID.');
     }
 
-    //Update post
+    // Ensure the user is the author of the post
+    if (user.sub !== post.author.id) {
+      throw new ForbiddenException('You can only update your own posts.');
+    }
+
+    // Update post fields, using existing values if new ones are not provided
     post.title = patchPostDTO.title ?? post.title;
     post.content = patchPostDTO.content ?? post.content;
     post.status = patchPostDTO.status ?? post.status;
@@ -68,31 +78,37 @@ export class UpdatePostProvider {
     post.publishedOn = patchPostDTO.publishedOn ?? post.publishedOn;
     post.coverImageUrl = patchPostDTO.coverImageUrl ?? post.coverImageUrl;
 
+    // Fetch and validate tags, if provided
     let tags: Tag[] | undefined = undefined;
-    try {
-      if (patchPostDTO.tags) {
+    if (patchPostDTO.tags) {
+      try {
         tags = await this.tagsService.findTags(patchPostDTO.tags);
         post.tags = tags;
+      } catch (error) {
+        throw new RequestTimeoutException(
+          'Unable to process your request at the moment. Please try again later.',
+          {
+            description:
+              'Error connecting to the database while fetching tags.',
+          },
+        );
       }
-    } catch (error) {
-      throw new RequestTimeoutException(
-        'Unable to process your request at the moment please try later.',
-        { description: 'error connecting to the database.' },
-      );
+
+      // Ensure the correct number of tags are found
+      if (tags.length !== patchPostDTO.tags.length) {
+        throw new BadRequestException(
+          'Invalid tag IDs provided. Please check and try again.',
+        );
+      }
     }
 
-    if (tags !== undefined && tags.length !== patchPostDTO.tags.length) {
-      throw new BadRequestException(
-        'Please check your tags IDs and ensure they are correct.',
-      );
-    }
-
+    // Save the updated post in the database
     try {
       post = await this.postsRepository.save(post);
     } catch (error) {
       throw new RequestTimeoutException(
-        'Unable to process your request at the moment please try later.',
-        { description: 'error connecting to the database.' },
+        'Unable to process your request at the moment. Please try again later.',
+        { description: 'Error saving the updated post to the database.' },
       );
     }
 
