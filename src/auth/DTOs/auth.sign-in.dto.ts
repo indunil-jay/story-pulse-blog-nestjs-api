@@ -8,6 +8,9 @@ import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
  *
  */
 export class SignInDTO {
+  /**
+   * user's email  type is string
+   */
   @ApiProperty({
     description: 'The email address of the user.',
     example: 'user@example.com',
@@ -16,6 +19,9 @@ export class SignInDTO {
   @IsNotEmpty({ message: 'Email must not be empty.' })
   email: string;
 
+  /**
+   * user's password  type is string
+   */
   @ApiProperty({
     description: 'The password of the user.',
     example: 'securePassword123',

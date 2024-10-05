@@ -52,9 +52,7 @@ export class AuthenticationGuard implements CanActivate {
    * @returns {Promise<boolean>} Resolves to `true` if any of the guards allow access, otherwise throws an `UnauthorizedException`.
    *
    * @throws {UnauthorizedException} If no guard allows access to the route.
-
    */
-
   public async canActivate(context: ExecutionContext): Promise<boolean> {
     // Retrieve the auth types defined on the route (or default to Bearer)
     const authTypes = this.reflector.getAllAndOverride(AUTH_TYPE_KEY, [

@@ -39,7 +39,6 @@ export class AccessTokenGuard implements CanActivate {
    * @throws {UnauthorizedException} If the token is missing, expired, or invalid.
    *
    */
-
   public async canActivate(context: ExecutionContext): Promise<boolean> {
     //1. Extract the request from the execution context
     const request = context.switchToHttp().getRequest();
@@ -70,7 +69,6 @@ export class AccessTokenGuard implements CanActivate {
    * @param {Request} request - The incoming request object.
    * @returns {string | undefined} The JWT token if it exists, otherwise `undefined`.
    */
-
   private extractRequestFromHeader(request: Request): string | undefined {
     const [_, token] = request.headers.authorization?.split(' ') ?? [];
     return token;

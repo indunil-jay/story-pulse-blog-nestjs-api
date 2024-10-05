@@ -6,6 +6,9 @@ import { IsNotEmpty, IsString } from 'class-validator';
  */
 
 export class GoogleTokenDTO {
+  /**
+   * token which is provided by google service
+   */
   @ApiProperty({
     description: 'The Google authentication token',
     example: 'your-google-authentication-token',

@@ -13,7 +13,16 @@ import {
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Match } from '../decorators/password-match.decorator';
 
+/**
+ *
+ * The `SignUpDTO` class represents the data transfer object (DTO)
+ * for the user sign-up process.
+ *
+ */
 export class SignUpDTO {
+  /**
+   * user's firstName
+   */
   @ApiProperty({
     description: 'A user’s first name.',
     example: 'mike',
@@ -24,6 +33,9 @@ export class SignUpDTO {
   @MaxLength(20, { message: 'FirstName must not be exceed 20 characters.' })
   firstName: string;
 
+  /**
+   * user's lastname , it is optional
+   */
   @ApiPropertyOptional({
     description: 'A user’s last name.',
     example: 'Doe',
@@ -34,6 +46,9 @@ export class SignUpDTO {
   @MaxLength(20, { message: 'lastName must not be exceed 20 characters.' })
   lastName?: string;
 
+  /**
+   * user's email ,
+   */
   @ApiProperty({
     description: 'A user’s email address.',
     example: 'mike.doe@example.com',
@@ -45,6 +60,9 @@ export class SignUpDTO {
   })
   email: string;
 
+  /**
+   * user's password
+   */
   @ApiProperty({
     description:
       'The user’s password. Must be 8-20 characters long, include at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.',
@@ -71,6 +89,9 @@ export class SignUpDTO {
   })
   password: string;
 
+  /**
+   * user's confirm password
+   */
   @ApiProperty({
     description: 'Confirmation of the password. Must match the password field.',
     example: 'SecureP@ssword123',
@@ -82,6 +103,9 @@ export class SignUpDTO {
   })
   confirmPassword: string;
 
+  /**
+   * user's date of birth
+   */
   @ApiPropertyOptional({
     description: 'The user’s date of birth in ISO 8601 format.',
     example: '1990-01-01',
@@ -90,6 +114,9 @@ export class SignUpDTO {
   @IsOptional()
   dataOfBirth?: Date;
 
+  /**
+   * about small user's bio
+   */
   @ApiPropertyOptional({
     description: 'A brief bio about the user.',
     example:
@@ -101,6 +128,9 @@ export class SignUpDTO {
   @MinLength(32)
   bio?: string;
 
+  /**
+   * user's image url
+   */
   @ApiPropertyOptional({
     description: 'URL of the user’s profile image.',
     example: 'https://example.com/profile-image.jpg',

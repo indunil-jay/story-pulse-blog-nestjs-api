@@ -7,10 +7,9 @@ import { IActiveUser } from 'src/auth/interfaces/active-user.interface';
 /**
  * A guard for checking the user roles while involing certain action on routes.
  */
-
 @Injectable()
 export class RolesGuard implements CanActivate {
-  /**
+  /** Create  instance with injected serivecs
    * @param {Reflector} reflector - Used to read metadata defined by decorators get the meta databy execution context.
    * @param {UsersService} usersService - inject user related services
    */
