@@ -11,14 +11,21 @@ import {
   Query,
 } from '@nestjs/common';
 import { CreatePostDTO } from './DTOs/create-post.dto';
-import { GetPostParamDTO } from './DTOs/get-post-param.dto';
-import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { PatchPostDTO } from './DTOs/patch-post.dto';
 import { GetPostDTO } from './DTOs/get.posts.dto';
 import { ActiveUser } from 'src/auth/decorators/active-user.decorator';
 import { IActiveUser } from 'src/auth/interfaces/active-user.interface';
 import { Roles } from 'src/auth/decorators/role.decorator';
 import { UserRole } from 'src/users/enums/users.roles.enum';
+import { AuthType } from 'src/auth/enums/auth-type';
+import { Auth } from 'src/auth/decorators/auth.decorator';
 
 /**
  * Responsible for handling  post related routes.
@@ -33,8 +40,7 @@ export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   /**
-   * Routes for handle get post by Id or get  all posts
-   * @param {GetPostParamDTO} getPostParamDTO  -  post id details.
+   * Routes for handle get post get  all posts
    * @param postQuery - details related to pagination
    * @returns
    */
@@ -68,8 +74,44 @@ export class PostsController {
     description: 'Post not found (for single post requests).',
   })
   @Get()
+  @Auth(AuthType.None)
   public async getPosts(@Query() postQuery: GetPostDTO) {
     return this.postsService.findAllPosts(postQuery);
+  }
+
+  /**
+   * Routes for handle get post by Id or
+   * @param {number} id  -  post id details.
+   * @returns
+   */
+  @ApiParam({
+    name: 'id',
+    type: 'number',
+    required: true,
+    description: 'The post  id which request to get',
+    example: 1,
+  })
+  @ApiOperation({
+    summary: 'Fetch a corresponding post match to the passed Id.',
+    description: 'Retrieves  a single post by its ID.',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Posts fetched successfully.',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Post not found',
+  })
+  @ApiResponse({
+    status: 500,
+    description:
+      'Internal Server Error. An unexpected error occurred on the server while processing the request.',
+  })
+  @Get('/:id')
+  @Auth(AuthType.None)
+  public async getPostById(@Param('id', ParseIntPipe) id: number) {
+    return this.postsService.findPostById(id);
   }
 
   /**
