@@ -23,7 +23,6 @@ export class PostsService {
    * @param {DeletePostProvider} deletePostProvider - Provider responsible for deleting posts.
    * @param {UpdatePostProvider} updatePostProvider - Provider responsible for updating existing posts.
    * @param {GetPostsProvider} getPostsProvider - Provider responsible for fetching multiple posts.
-
    */
   constructor(
     private readonly createPostProvider: CreatePostProvider,

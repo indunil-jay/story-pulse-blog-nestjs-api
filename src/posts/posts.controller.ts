@@ -124,7 +124,6 @@ export class PostsController {
    * @param {IActiveUser} user - get current signed user from request.
    * @returns  - deleted results resonse
    */
-
   @ApiOperation({
     summary: 'Delete a existing post.',
     description:
@@ -163,7 +162,6 @@ export class PostsController {
    * @param user - get current signed user from request.
    * @returns  - updated post
    */
-
   @ApiOperation({
     summary: 'Update a existing post.',
     description: 'Allows update the existing post for authenicated user.',

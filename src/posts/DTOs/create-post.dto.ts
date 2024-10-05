@@ -17,7 +17,16 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { CreateMetaDataDTO } from 'src/meta-data/DTOs/create-meta-data.dto';
 import { Type } from 'class-transformer';
 
+/**
+ * Data Transfer Object (DTO) for creating a blog post.
+ * This DTO validates the incoming data to ensure it meets
+ * the required specifications before being processed.
+ */
 export class CreatePostDTO {
+  /**
+   * The title of the blog post.
+   * Must be between 12 and 96 characters long.
+   */
   @ApiProperty({
     description:
       'The title of the blog post. It should be between 12 and 96 characters long.',
@@ -29,6 +38,10 @@ export class CreatePostDTO {
   @MaxLength(96, { message: 'Title must not exceed 96 characters.' })
   title: string;
 
+  /**
+   * A URL-friendly version of the title, typically all lowercase.
+   * It can only contain letters, numbers, and hyphens.
+   */
   @ApiProperty({
     description:
       'A URL-friendly version of the title, typically all lowercase with words separated by hyphens.',
@@ -43,6 +56,10 @@ export class CreatePostDTO {
   @MaxLength(192)
   slug: string;
 
+  /**
+   * The status of the blog post.
+   * Can be one of the following: "pending", "published", "draft", "scheduled", or "reviewed".
+   */
   @ApiProperty({
     enum: PostStatus,
     description:
@@ -55,6 +72,10 @@ export class CreatePostDTO {
   @IsNotEmpty()
   status: PostStatus;
 
+  /**
+   * The main content body of the blog post.
+   * This property must not be empty.
+   */
   @ApiProperty({
     description: 'The main content body of the blog post.',
     example: 'This is a sample blog post content.',
@@ -63,6 +84,10 @@ export class CreatePostDTO {
   @IsNotEmpty()
   content: string;
 
+  /**
+   * The URL of the featured image for the blog post.
+   * It must be a valid URL and can be omitted.
+   */
   @ApiPropertyOptional({
     description: 'The URL of the featured image for the blog post.',
     example: 'http://example.com/sample-image.jpg',
@@ -70,26 +95,38 @@ export class CreatePostDTO {
   @IsUrl({}, { message: 'coverImageUrl must be a valid URL.' })
   @IsOptional()
   @MaxLength(1024, {
-    message: 'The URL of the featured image must not exceed 192 characters.',
+    message: 'The URL of the featured image must not exceed 1024 characters.',
   })
   coverImageUrl?: string;
 
-  @ApiProperty({
+  /**
+   * The ISO format string for the post published time.
+   * This property is optional.
+   */
+  @ApiPropertyOptional({
     description: 'ISO format string for post published time',
   })
   @IsOptional()
   @IsISO8601()
   publishedOn?: Date;
 
+  /**
+   * A list of tag IDs associated with the blog post.
+   * This property is optional and each tag must be an integer.
+   */
   @ApiPropertyOptional({
     description: 'A list of tags IDs associated with the blog post.',
     example: [1, 2],
   })
   @IsOptional()
-  @IsArray({ message: 'tags must be an array of strings.' })
-  @IsInt({ each: true, message: 'Each tag must be a integer.' })
+  @IsArray({ message: 'tags must be an array of integers.' })
+  @IsInt({ each: true, message: 'Each tag must be an integer.' })
   tags?: number[];
 
+  /**
+   * A list of categories the blog post belongs to.
+   * Each category must be at least 3 characters long.
+   */
   @ApiPropertyOptional({
     description:
       'A list of categories the blog post belongs to. Each category must be at least 3 characters long.',
@@ -104,6 +141,10 @@ export class CreatePostDTO {
   })
   categories?: string[];
 
+  /**
+   * A list of meta data values associated with the blog post.
+   * This property is optional and can contain JSON formatted strings.
+   */
   @ApiPropertyOptional({
     required: false,
     description: 'A list of meta data values that a post has.',
@@ -112,7 +153,7 @@ export class CreatePostDTO {
       properties: {
         metaValue: {
           type: 'json',
-          description: 'the metaValue is a JSON string',
+          description: 'The metaValue is a JSON string',
           example: '{"backLinks1":"https://backlink.org/link-1"}',
         },
       },
