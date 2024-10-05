@@ -19,7 +19,6 @@ import jwtConfig from '../config/jwt.config';
  * provided Google token and either retrieves an existing user or creates a new user in
  * the database. It then generates access and refresh tokens for the authenticated user.
  */
-
 @Injectable()
 export class GoogleAuthenticationService implements OnModuleInit {
   private oAuthClient: OAuth2Client;
@@ -31,7 +30,6 @@ export class GoogleAuthenticationService implements OnModuleInit {
    * @param {UsersService} usersService - Service for user management, allowing retrieval and creation of user records.
    * @param {GenerateTokensProvider} generateTokensProvider - Provider for generating access and refresh tokens.
    */
-
   constructor(
     @Inject(jwtConfig.KEY)
     private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,

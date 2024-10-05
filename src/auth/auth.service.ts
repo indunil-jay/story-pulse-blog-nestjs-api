@@ -17,7 +17,6 @@ export class AuthService {
    *
    * @param {UsersService} usersService - The service responsible for user operations, injected using forwardRef to handle circular dependencies.
    * @param {SignInProvider} signInProvider - The provider responsiable for sign-in process.
-
    */
   constructor(
     @Inject(forwardRef(() => UsersService))
@@ -54,7 +53,6 @@ export class AuthService {
    *  @param {RefreshTokenDTO} refreshTokenDTO -The data transfer object containing refresh token.
    *  @returns {Promise<{accessToken: string, refreshToken: string}>} -  the results of th  re-generation of tokens.
    */
-
   public async refreshTokens(refreshTokenDTO: RefreshTokenDTO): Promise<{
     accessToken: string;
     refreshToken: string;

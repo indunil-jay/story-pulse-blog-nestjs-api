@@ -25,9 +25,7 @@ export class GoogleAuthenticationController {
    *
    * @param {GoogleTokenDTO} googleTokenDTO - The DTO containing the Google token.
    * @returns {Promise<any>} - The result of the authentication process.
- 
    */
-
   @ApiResponse({
     status: 200,
     description: 'Authentication successful',

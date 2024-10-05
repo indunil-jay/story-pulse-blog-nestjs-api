@@ -1,4 +1,14 @@
+/**
+ * user interface for currently logged-in user
+ */
 export interface IActiveUser {
-  sub: number; //ID of the user
-  email: string; //email of the user
+  /**
+   *  sub represents the user id.
+   */
+  sub: number;
+
+  /**
+   *  email represent the logged user email.
+   */
+  email: string;
 }

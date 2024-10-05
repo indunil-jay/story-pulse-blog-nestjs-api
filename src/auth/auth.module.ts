@@ -13,6 +13,9 @@ import { RefreshTokensProvider } from './providers/refresh-tokens.provider';
 import { GoogleAuthenticationController } from './social/google-authentication.controller';
 import { GoogleAuthenticationService } from './social/google-authentication.service';
 
+/**
+ * module for auth, encapsulated auth related informations
+ */
 @Module({
   controllers: [AuthController, GoogleAuthenticationController],
   providers: [

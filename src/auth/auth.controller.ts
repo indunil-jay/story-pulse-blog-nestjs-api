@@ -19,7 +19,6 @@ import { RefreshTokenDTO } from './DTOs/auth.refresh-token.dto';
 /**
  *  AuthController responsible for handling authentication-related api routes.
  */
-
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
@@ -28,7 +27,6 @@ export class AuthController {
    *
    * @param {AuthService} authService - The service responsible for authentication operations.
    */
-
   constructor(private readonly authService: AuthService) {}
 
   /**
@@ -71,7 +69,6 @@ export class AuthController {
    * @param {SignInDTO} signInDTO - the DTO for containing user shape for registration
    * @returns {Promise<Boolean> } - the results of the sign-up process
    */
-
   @ApiOperation({
     summary: 'sign a registed user.',
   })
