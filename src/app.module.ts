@@ -22,7 +22,7 @@ import { DataResponseInterceptor } from './common/interceptors/data-response/dat
 import { MailModule } from './mail/mail.module';
 import { RolesGuard } from './auth/guards/roles/roles.guard';
 
-// Determine the environment (development, production, etc.)
+/** Determine the environment (development, production, etc.) */
 const ENV = process.env.NODE_ENV;
 
 /**
