@@ -12,6 +12,9 @@ import { DeletePostProvider } from './providers/delete-post.provider';
 import { UpdatePostProvider } from './providers/update-post.provider';
 import { GetPostsProvider } from './providers/get-posts.provider';
 
+/**
+ *  posts module
+ */
 @Module({
   controllers: [PostsController],
   providers: [

@@ -6,8 +6,17 @@ import { Post } from '../post.entity';
 import { GetPostDTO } from '../DTOs/get.posts.dto';
 import { IPaginated } from 'src/common/pagination/interfaces/paginated.interface';
 
+/**
+ *  provider for containing business logic for getting posts.
+ */
 @Injectable()
 export class GetPostsProvider {
+  /**
+   * Creates an instance with injected service
+   *
+   * @param {PaginationProvider} paginationProvider - inject pagination service
+   * @param {Repository<Post>} postsRepository -  inject post repository which use to talk post table in database.
+   */
   constructor(
     private readonly paginationProvider: PaginationProvider,
     @InjectRepository(Post)

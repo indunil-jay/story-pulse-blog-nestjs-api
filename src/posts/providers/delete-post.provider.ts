@@ -16,7 +16,7 @@ import { UserRole } from 'src/users/enums/users.roles.enum';
 @Injectable()
 export class DeletePostProvider {
   /**
-   *
+   * Creates instance with injected serivces
    * @param  {UsersService} usersService - injects the user service for access user related operations
    * @param {Repository<Post>} postsRepository - injects repository for  interact with post table in database.
    */
@@ -28,10 +28,11 @@ export class DeletePostProvider {
   ) {}
 
   /**
+   *  Delete post method
    *
    * @param {number} id - post's id for which  going to delete.
    * @param {IActiveUser} user - user interface for access user's email and sub from request.
-   * @returns
+   * @returns  delete response
    */
   public async deletePost(id: number, user: IActiveUser) {
     //Get post by Id
