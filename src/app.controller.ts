@@ -1,7 +1,8 @@
 import { Controller } from '@nestjs/common';
-import { AppService } from './app.service';
 
+/**
+ * The `AppController` serves as the main entry point for handling
+ * incoming requests to the application.
+ */
 @Controller()
-export class AppController {
-  constructor(private readonly appService: AppService) {}
-}
+export class AppController {}

@@ -1,4 +1,4 @@
-import { Module, Post } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PostsModule } from './posts/posts.module';
@@ -22,17 +22,33 @@ import { DataResponseInterceptor } from './common/interceptors/data-response/dat
 import { MailModule } from './mail/mail.module';
 import { RolesGuard } from './auth/guards/roles/roles.guard';
 
+// Determine the environment (development, production, etc.)
 const ENV = process.env.NODE_ENV;
 
+/**
+ * The `AppModule` is the root module of the application. It serves as the
+ * central hub that imports all other modules, controllers, and providers,
+ * orchestrating the application's core functionality.
+ */
 @Module({
   imports: [
+    // Global configuration module that loads environment variables
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: !ENV ? '.env' : `.env.${ENV}`,
       load: [appConfig, databaseConfig],
       validationSchema: envValidation,
     }),
+
+    // Feature modules for different parts of the application
     PostsModule,
+    TagsModule,
+    MetaDataModule,
+    UsersModule,
+    PaginationModule,
+    AuthModule,
+
+    // TypeORM configuration for connecting to the PostgreSQL database
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -50,33 +66,30 @@ const ENV = process.env.NODE_ENV;
       }),
     }),
 
-    TagsModule,
-    MetaDataModule,
-    UsersModule,
-    PaginationModule,
-    AuthModule,
-
+    // JWT configuration for authentication
     ConfigModule.forFeature(jwtConfig),
     JwtModule.registerAsync(jwtConfig.asProvider()),
+
+    // Mail module for sending emails
     MailModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController], // Registers the AppController to handle application-wide requests
   providers: [
-    AppService,
+    AppService, // Main service for application logic
     {
       provide: APP_GUARD,
-      useClass: AuthenticationGuard,
+      useClass: AuthenticationGuard, // Global guard for authentication
     },
-    AccessTokenGuard,
+    AccessTokenGuard, // Guard for validating access tokens
 
     {
       provide: APP_GUARD,
-      useClass: RolesGuard,
+      useClass: RolesGuard, // Global guard for role-based access control
     },
 
     {
       provide: APP_INTERCEPTOR,
-      useClass: DataResponseInterceptor,
+      useClass: DataResponseInterceptor, // Interceptor for formatting responses
     },
   ],
 })
