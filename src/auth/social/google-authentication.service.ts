@@ -21,6 +21,7 @@ import jwtConfig from '../config/jwt.config';
  */
 @Injectable()
 export class GoogleAuthenticationService implements OnModuleInit {
+  /** google oAuth client  */
   private oAuthClient: OAuth2Client;
 
   /**
@@ -44,7 +45,7 @@ export class GoogleAuthenticationService implements OnModuleInit {
    * Initializes the Google OAuth client with the client ID and client secret.
    * This method is called when the module is initialized.
    */
-  public onModuleInit() {
+  public onModuleInit(): void {
     const clientId = this.jwtConfiguration.googleClientId;
     const clientSecret = this.jwtConfiguration.googleClinetSecret;
 

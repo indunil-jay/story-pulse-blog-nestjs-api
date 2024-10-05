@@ -10,6 +10,12 @@ import { FindOneUserByEmailProvider } from './providers/find-one-user-by-email.p
 import { FindOneByGoogleIdProvider } from './providers/find-one-by-google-id.provider';
 import { CreateGoogleUserProvider } from './providers/create-google-user.provider';
 
+/**
+ * The `UsersModule` is responsible for encapsulating the user-related
+ * functionalities of the application. It provides a cohesive structure
+ * for managing users, including user creation, authentication, and
+ * retrieval.
+ */
 @Module({
   controllers: [UsersController],
   imports: [TypeOrmModule.forFeature([User]), forwardRef(() => AuthModule)],
@@ -19,7 +25,7 @@ import { CreateGoogleUserProvider } from './providers/create-google-user.provide
     FindOneUserByEmailProvider,
     FindOneByGoogleIdProvider,
     CreateGoogleUserProvider,
-    // UsersCreateManyProvider,
+    // UsersCreateManyProvider, // Provider for handling multiple user creation
   ],
   exports: [UsersService],
 })
