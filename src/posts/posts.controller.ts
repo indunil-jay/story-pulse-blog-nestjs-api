@@ -11,13 +11,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { CreatePostDTO } from './DTOs/create-post.dto';
-import {
-  ApiOperation,
-  ApiParam,
-  ApiQuery,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PatchPostDTO } from './DTOs/patch-post.dto';
 import { GetPostDTO } from './DTOs/get.posts.dto';
 import { ActiveUser } from 'src/auth/decorators/active-user.decorator';

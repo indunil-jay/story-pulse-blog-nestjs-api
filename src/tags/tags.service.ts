@@ -1,14 +1,18 @@
+import { GetAllTagProvider } from './providers/get-all-tag.provider';
 import { In, Repository } from 'typeorm';
 import { CreateTagDTO } from './DTOs/create-tag.dto';
 import { Injectable } from '@nestjs/common';
 import { Tag } from './tag.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { GetTagDTO } from './DTOs/get-tag.dto';
 
 @Injectable()
 export class TagsService {
   constructor(
     @InjectRepository(Tag)
     private readonly tagRepository: Repository<Tag>,
+
+    private readonly getAllTagProvider: GetAllTagProvider,
   ) {}
 
   public async createTag(createTagDTO: CreateTagDTO) {
@@ -26,5 +30,9 @@ export class TagsService {
 
   public async deleteTag(id: number) {
     return await this.tagRepository.delete(id);
+  }
+
+  public async getAllTags(getTagDTO: GetTagDTO) {
+    return await this.getAllTagProvider.getAllTags(getTagDTO);
   }
 }
