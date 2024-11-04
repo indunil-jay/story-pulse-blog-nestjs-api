@@ -9,6 +9,8 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { CreateTagDTO } from './DTOs/create-tag.dto';
 import { TagsService } from './tags.service';
+import { Roles } from 'src/auth/decorators/role.decorator';
+import { UserRole } from 'src/users/enums/users.roles.enum';
 
 @ApiTags('Tags')
 @Controller('tags')
@@ -20,6 +22,7 @@ export class TagsController {
     return this.tagsService.createTag(createTagDTO);
   }
 
+  @Roles(UserRole.ADMIN)
   @Delete('/:id')
   public deleteTag(@Param('id', ParseIntPipe) id: number) {
     return this.tagsService.deleteTag(id);

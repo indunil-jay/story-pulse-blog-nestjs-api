@@ -1,8 +1,14 @@
 import { UsersService } from 'src/users/users.service';
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  forwardRef,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { ROLES_KEY } from 'src/auth/decorators/role.decorator';
 import { IActiveUser } from 'src/auth/interfaces/active-user.interface';
+import { ROLES_KEY } from 'src/auth/constants/auth.constants';
 
 /**
  * A guard for checking the user roles while involing certain action on routes.
@@ -16,6 +22,7 @@ export class RolesGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
 
+    @Inject(forwardRef(() => UsersService))
     private readonly usersService: UsersService,
   ) {}
 

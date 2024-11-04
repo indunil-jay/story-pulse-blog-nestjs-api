@@ -1,6 +1,5 @@
 import { CreateGoogleUserProvider } from './providers/create-google-user.provider';
 import { FindOneByGoogleIdProvider } from './providers/find-one-by-google-id.provider';
-import { UsersCreateManyProvider } from './providers/users.create-many.provider';
 import { FindOneUserByEmailProvider } from './providers/find-one-user-by-email.provider';
 import { SignupProvider } from './providers/signup.provider';
 import { SignUpDTO } from './../auth/DTOs/auth.sign-up.dto';
@@ -13,7 +12,6 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IGoogleUser } from './interfaces/google-user.interface';
-// import { CreateManyUsersDTO } from './DTOs/create-many-user.dto';
 
 /**
  *   UsersService responsible for handling user related business-logic.
@@ -107,9 +105,4 @@ export class UsersService {
     }
     return user;
   }
-
-  // create many users TODO:
-  // public async createManyUsers(createManyUsersDTO: CreateManyUsersDTO) {
-  //   return this.usersCreateManyProvider.createManyUsers(createManyUsersDTO);
-  // }
 }
