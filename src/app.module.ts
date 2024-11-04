@@ -21,6 +21,7 @@ import { AuthenticationGuard } from './auth/guards/authentication/authentication
 import { DataResponseInterceptor } from './common/interceptors/data-response/data-response.interceptor';
 import { MailModule } from './mail/mail.module';
 import { RolesGuard } from './auth/guards/roles/roles.guard';
+import { ForgotPasswordProvider } from './providers/forgot-password.provider';
 
 /** Determine the environment (development, production, etc.) */
 const ENV = process.env.NODE_ENV;
@@ -91,6 +92,8 @@ const ENV = process.env.NODE_ENV;
       provide: APP_INTERCEPTOR,
       useClass: DataResponseInterceptor, // Interceptor for formatting responses
     },
+
+    ForgotPasswordProvider,
   ],
 })
 export class AppModule {}

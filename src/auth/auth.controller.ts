@@ -15,6 +15,7 @@ import { SignInDTO } from './DTOs/auth.sign-in.dto';
 import { Auth } from './decorators/auth.decorator';
 import { AuthType } from './enums/auth-type';
 import { RefreshTokenDTO } from './DTOs/auth.refresh-token.dto';
+import { ForgotPasswordDTO } from './DTOs/auth.forgot-password.dto';
 
 /**
  *  AuthController responsible for handling authentication-related api routes.
@@ -118,4 +119,12 @@ export class AuthController {
   ): Promise<{ accessToken: string; refreshToken: string }> {
     return this.authService.refreshTokens(refreshTokenDTO);
   }
+
+  @Auth(AuthType.None)
+  @Post('forgot-password')
+  public async forgotPassword() {}
+
+  @Auth(AuthType.None)
+  @Post('reset-password')
+  public async resetPassword(@Body() forgotPasswordDTO: ForgotPasswordDTO) {}
 }

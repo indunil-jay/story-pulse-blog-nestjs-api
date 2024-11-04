@@ -1,3 +1,4 @@
+import { ForgotPasswordDTO } from './DTOs/auth.forgot-password.dto';
 import { RefreshTokensProvider } from './providers/refresh-tokens.provider';
 import { RefreshTokenDTO } from './DTOs/auth.refresh-token.dto';
 import { SignInProvider } from './providers/sign-in.provider';
@@ -6,6 +7,7 @@ import { SignUpDTO } from './DTOs/auth.sign-up.dto';
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { User } from 'src/users/user.entity';
 import { UsersService } from 'src/users/users.service';
+import { ForgotPasswordProvider } from './providers/forgot-password.provider';
 
 /**
  * AuthService responsible for handling authentication business-logic.
@@ -25,6 +27,8 @@ export class AuthService {
     private readonly signInProvider: SignInProvider,
 
     private readonly refreshTokensProvider: RefreshTokensProvider,
+
+    private readonly forgotPasswordProvider: ForgotPasswordProvider,
   ) {}
 
   /**
@@ -58,5 +62,9 @@ export class AuthService {
     refreshToken: string;
   }> {
     return await this.refreshTokensProvider.refreshTokens(refreshTokenDTO);
+  }
+
+  public async forgotPassword(forgotPasswordDTO: ForgotPasswordDTO) {
+    return await this.forgotPasswordProvider.forgotPassword(forgotPasswordDTO);
   }
 }

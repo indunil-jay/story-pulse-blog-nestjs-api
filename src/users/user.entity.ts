@@ -1,4 +1,11 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { UserRole } from './enums/users.roles.enum';
 import { Post } from 'src/posts/post.entity';
 import { Exclude } from 'class-transformer';
@@ -109,6 +116,18 @@ export class User {
    */
   @Column({ type: 'varchar', length: 1024, nullable: true })
   profileImage?: string;
+
+  @Column({ type: 'varchar', length: 1024, nullable: true })
+  resetToken?: string;
+
+  @Column({ type: 'timestamp', nullable: true })
+  expiredAt?: Date;
+
+  @CreateDateColumn()
+  createdAt?: Date;
+
+  @UpdateDateColumn()
+  updatedAt?: Date;
 
   /**
    * A one-to-many relationship with the `Post` entity.

@@ -12,6 +12,7 @@ import { GenerateTokensProvider } from './providers/generate-tokens.provider';
 import { RefreshTokensProvider } from './providers/refresh-tokens.provider';
 import { GoogleAuthenticationController } from './social/google-authentication.controller';
 import { GoogleAuthenticationService } from './social/google-authentication.service';
+import { ForgotPasswordProvider } from './providers/forgot-password.provider';
 
 /**
  * module for auth, encapsulated auth related informations
@@ -28,6 +29,7 @@ import { GoogleAuthenticationService } from './social/google-authentication.serv
     GenerateTokensProvider,
     RefreshTokensProvider,
     GoogleAuthenticationService,
+    ForgotPasswordProvider,
   ],
   imports: [
     forwardRef(() => UsersModule),

@@ -4,7 +4,7 @@ import jwtConfig from '../config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { User } from 'src/users/user.entity';
 import { IActiveUser } from '../interfaces/active-user.interface';
-
+import { v4 as uuidv4 } from 'uuid';
 /**
  * The `GenerateTokensProvider` is responsible for generating JWT access and refresh tokens
  * for authenticated users. It uses the configured JWT settings to ensure secure token generation.
@@ -89,5 +89,9 @@ export class GenerateTokensProvider {
       accessToken,
       refreshToken,
     };
+  }
+
+  public generateResetToken() {
+    return uuidv4();
   }
 }
