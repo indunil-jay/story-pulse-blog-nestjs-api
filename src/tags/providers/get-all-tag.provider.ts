@@ -22,7 +22,7 @@ export class GetAllTagProvider {
 
     //if user does not privider id
     try {
-      tags = await this.tagsRepository.find();
+      tags = await this.tagsRepository.find({ where: { id: getTagDTO.id } });
     } catch (error) {
       throw new RequestTimeoutException(
         'Unable to process your request at the moment please try later.',

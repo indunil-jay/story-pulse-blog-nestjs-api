@@ -1,27 +1,32 @@
+import { CreateTagProvider } from './providers/create-tag.provider';
+import { DeleteTagProvider } from './providers/delete-tag.provider';
 import { GetAllTagProvider } from './providers/get-all-tag.provider';
 import { In, Repository } from 'typeorm';
 import { CreateTagDTO } from './DTOs/create-tag.dto';
 import { Injectable } from '@nestjs/common';
+import { GetTagDTO } from './DTOs/get-tag.dto';
 import { Tag } from './tag.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { GetTagDTO } from './DTOs/get-tag.dto';
 
 @Injectable()
 export class TagsService {
   constructor(
-    @InjectRepository(Tag)
-    private readonly tagRepository: Repository<Tag>,
-
     private readonly getAllTagProvider: GetAllTagProvider,
+
+    private readonly deleteTagProvider: DeleteTagProvider,
+
+    private readonly createTagProvider: CreateTagProvider,
+
+    @InjectRepository(Tag)
+    private readonly tagsRepository: Repository<Tag>,
   ) {}
 
   public async createTag(createTagDTO: CreateTagDTO) {
-    const tag = this.tagRepository.create(createTagDTO);
-    return await this.tagRepository.save(tag);
+    return await this.createTagProvider.createTag(createTagDTO);
   }
 
   public async findTags(tags: number[]) {
-    return await this.tagRepository.find({
+    return await this.tagsRepository.find({
       where: {
         id: In(tags),
       },
@@ -29,7 +34,7 @@ export class TagsService {
   }
 
   public async deleteTag(id: number) {
-    return await this.tagRepository.delete(id);
+    return await this.deleteTagProvider.deleteTag(id);
   }
 
   public async getAllTags(getTagDTO: GetTagDTO) {
