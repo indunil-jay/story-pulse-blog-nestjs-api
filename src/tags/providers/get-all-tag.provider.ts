@@ -18,9 +18,6 @@ export class GetAllTagProvider {
 
   public async getAllTags(getTagDTO: GetTagDTO) {
     let tags: Tag[] | undefined = undefined;
-    //if user provider id
-
-    //if user does not privider id
     try {
       tags = await this.tagsRepository.find({ where: { id: getTagDTO.id } });
     } catch (error) {

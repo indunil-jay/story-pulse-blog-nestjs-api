@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
@@ -15,6 +16,7 @@ import { UserRole } from 'src/users/enums/users.roles.enum';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { AuthType } from 'src/auth/enums/auth-type';
 import { GetTagDTO } from './DTOs/get-tag.dto';
+import { UpdateTagDTO } from './DTOs/update-tag.dto';
 
 @ApiTags('Tags')
 @Controller('tags')
@@ -36,5 +38,11 @@ export class TagsController {
   @Auth(AuthType.None)
   public async getAllTags(@Param() getTagDTO: GetTagDTO) {
     return this.tagsService.getAllTags(getTagDTO);
+  }
+
+  @Patch()
+  @Auth(AuthType.None)
+  public async updateTag(@Body() updateTagDTO: UpdateTagDTO) {
+    return this.tagsService.updateTag(updateTagDTO);
   }
 }

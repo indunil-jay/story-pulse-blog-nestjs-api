@@ -1,0 +1,10 @@
+PATCH http://localhost:3000/tags
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidGFya0BnbWFpbC5jb20iLCJpYXQiOjE3MzA2ODQ4NTMsImV4cCI6MTczMDY4ODQ1MywiYXVkIjoibG9jYWxob3N0OjMwMDAiLCJpc3MiOiJsb2NhbGhvc3Q6MzAwMCJ9.Bp1DM2jn8sG5Q-v9duvhjYs_m9vIB2B7auQRkfhJFP8
+Content-Type:application/json
+
+{
+"id":4,
+"name":"python-updated-again",
+"slug":"python-updated"
+
+}

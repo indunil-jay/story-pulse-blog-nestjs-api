@@ -7,11 +7,13 @@ import { UsersModule } from 'src/users/users.module';
 import { GetAllTagProvider } from './providers/get-all-tag.provider';
 import { CreateTagProvider } from './providers/create-tag.provider';
 import { DeleteTagProvider } from './providers/delete-tag.provider';
+import { UpdateTagProvider } from './providers/update-tag.provider';
+import { FindAllTagsProvider } from './providers/find-all-tags.provider';
 
 @Module({
   controllers: [TagsController],
   imports: [TypeOrmModule.forFeature([Tag]), UsersModule],
-  providers: [TagsService, GetAllTagProvider, CreateTagProvider, DeleteTagProvider],
+  providers: [TagsService, GetAllTagProvider, CreateTagProvider, DeleteTagProvider, UpdateTagProvider, FindAllTagsProvider],
   exports: [TagsService],
 })
 export class TagsModule {}
